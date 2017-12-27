@@ -1,0 +1,36 @@
+C:\Users\stefa\onedrive\documents\visual studio 2017\Projects\QuizMaker.WEB\QuizMaker.Models\bin\Debug\QuizMaker.Models.dll
+C:\Users\stefa\onedrive\documents\visual studio 2017\Projects\QuizMaker.WEB\QuizMaker.Models\bin\Debug\QuizMaker.Models.pdb
+C:\Users\stefa\onedrive\documents\visual studio 2017\Projects\QuizMaker.WEB\QuizMaker.Models\obj\Debug\QuizMaker.Models.dll
+C:\Users\stefa\onedrive\documents\visual studio 2017\Projects\QuizMaker.WEB\QuizMaker.Models\obj\Debug\QuizMaker.Models.pdb
+C:\Users\stefa\OneDrive\Documents\Visual Studio 2017\Projects\QuizMaker\QuizMaker.Models\bin\Debug\QuizMaker.Models.dll
+C:\Users\stefa\OneDrive\Documents\Visual Studio 2017\Projects\QuizMaker\QuizMaker.Models\bin\Debug\QuizMaker.Models.pdb
+C:\Users\stefa\OneDrive\Documents\Visual Studio 2017\Projects\QuizMaker\QuizMaker.Models\obj\Debug\QuizMaker.Models.csproj.CoreCompileInputs.cache
+C:\Users\stefa\OneDrive\Documents\Visual Studio 2017\Projects\QuizMaker\QuizMaker.Models\obj\Debug\QuizMaker.Models.dll
+C:\Users\stefa\OneDrive\Documents\Visual Studio 2017\Projects\QuizMaker\QuizMaker.Models\obj\Debug\QuizMaker.Models.pdb
+C:\Users\stefa\OneDrive\Documents\Visual Studio 2017\Projects\QuizMaker\QuizMaker.Models\bin\Debug\QuizMaker.DAL.dll
+C:\Users\stefa\OneDrive\Documents\Visual Studio 2017\Projects\QuizMaker\QuizMaker.Models\bin\Debug\EntityFramework.dll
+C:\Users\stefa\OneDrive\Documents\Visual Studio 2017\Projects\QuizMaker\QuizMaker.Models\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\stefa\OneDrive\Documents\Visual Studio 2017\Projects\QuizMaker\QuizMaker.Models\bin\Debug\QuizMaker.DAL.pdb
+C:\Users\stefa\OneDrive\Documents\Visual Studio 2017\Projects\QuizMaker\QuizMaker.Models\bin\Debug\QuizMaker.DAL.dll.config
+C:\Users\stefa\OneDrive\Documents\Visual Studio 2017\Projects\QuizMaker\QuizMaker.Models\bin\Debug\EntityFramework.xml
+C:\Users\stefa\OneDrive\Documents\Visual Studio 2017\Projects\QuizMaker\QuizMaker.Models\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\stefa\OneDrive\Documents\Visual Studio 2017\Projects\QuizMaker\QuizMaker.Models\obj\Debug\QuizMaker.Models.csprojResolveAssemblyReference.cache
+C:\Users\stefa\OneDrive\Documents\Visual Studio 2017\Projects\QuizMaker\QuizMaker.Models\bin\Debug\QuizMaker.Models.dll.config
+C:\Users\stefa\OneDrive\Documents\Visual Studio 2017\Projects\QuizMaker\QuizMaker.Models\bin\Debug\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\stefa\OneDrive\Documents\Visual Studio 2017\Projects\QuizMaker\QuizMaker.Models\bin\Debug\Microsoft.Extensions.Configuration.Abstractions.xml
+C:\Users\stefa\Desktop\QuizMaker\QuizMaker.Models\bin\Debug\QuizMaker.Models.dll.config
+C:\Users\stefa\Desktop\QuizMaker\QuizMaker.Models\bin\Debug\QuizMaker.Models.dll
+C:\Users\stefa\Desktop\QuizMaker\QuizMaker.Models\bin\Debug\QuizMaker.Models.pdb
+C:\Users\stefa\Desktop\QuizMaker\QuizMaker.Models\bin\Debug\EntityFramework.dll
+C:\Users\stefa\Desktop\QuizMaker\QuizMaker.Models\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\stefa\Desktop\QuizMaker\QuizMaker.Models\bin\Debug\QuizMaker.DAL.dll
+C:\Users\stefa\Desktop\QuizMaker\QuizMaker.Models\bin\Debug\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\stefa\Desktop\QuizMaker\QuizMaker.Models\bin\Debug\QuizMaker.DAL.pdb
+C:\Users\stefa\Desktop\QuizMaker\QuizMaker.Models\bin\Debug\QuizMaker.DAL.dll.config
+C:\Users\stefa\Desktop\QuizMaker\QuizMaker.Models\bin\Debug\EntityFramework.xml
+C:\Users\stefa\Desktop\QuizMaker\QuizMaker.Models\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\stefa\Desktop\QuizMaker\QuizMaker.Models\bin\Debug\Microsoft.Extensions.Configuration.Abstractions.xml
+C:\Users\stefa\Desktop\QuizMaker\QuizMaker.Models\obj\Debug\QuizMaker.Models.csprojResolveAssemblyReference.cache
+C:\Users\stefa\Desktop\QuizMaker\QuizMaker.Models\obj\Debug\QuizMaker.Models.csproj.CoreCompileInputs.cache
+C:\Users\stefa\Desktop\QuizMaker\QuizMaker.Models\obj\Debug\QuizMaker.Models.dll
+C:\Users\stefa\Desktop\QuizMaker\QuizMaker.Models\obj\Debug\QuizMaker.Models.pdb
