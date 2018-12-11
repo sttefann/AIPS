@@ -1,90 +1,140 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="QuizMakerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-  <EntityType Name="AspNetRoleClaim">
+  <EntityContainer Name="QuizMakerEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="C__MigrationHistory" EntityType="QuizMakerModel.C__MigrationHistory" />
+    <EntitySet Name="AspNetRoles" EntityType="QuizMakerModel.AspNetRole" />
+    <EntitySet Name="AspNetUserClaims" EntityType="QuizMakerModel.AspNetUserClaim" />
+    <EntitySet Name="AspNetUserLogins" EntityType="QuizMakerModel.AspNetUserLogin" />
+    <EntitySet Name="AspNetUsers" EntityType="QuizMakerModel.AspNetUser" />
+    <EntitySet Name="Categories" EntityType="QuizMakerModel.Category" />
+    <EntitySet Name="PossibleAnswers" EntityType="QuizMakerModel.PossibleAnswer" />
+    <EntitySet Name="Questions" EntityType="QuizMakerModel.Question" />
+    <EntitySet Name="Quizs" EntityType="QuizMakerModel.Quiz" />
+    <EntitySet Name="TeamMembers" EntityType="QuizMakerModel.TeamMember" />
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="QuizMakerModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="QuizMakerModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Quiz_Owner" Association="QuizMakerModel.FK_Quiz_Owner">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="Quizze" EntitySet="Quizs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TeamMembers_Users" Association="QuizMakerModel.FK_TeamMembers_Users">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="TeamMember" EntitySet="TeamMembers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Quizzes_Categories" Association="QuizMakerModel.FK_Quizzes_Categories">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="Quizze" EntitySet="Quizs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PossibleAnswers_Question" Association="QuizMakerModel.FK_PossibleAnswers_Question">
+      <End Role="Question" EntitySet="Questions" />
+      <End Role="PossibleAnswer" EntitySet="PossibleAnswers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Quiz_Questions" Association="QuizMakerModel.FK_Quiz_Questions">
+      <End Role="Quizze" EntitySet="Quizs" />
+      <End Role="Question" EntitySet="Questions" />
+    </AssociationSet>
+    <AssociationSet Name="AspNetUserRoles" Association="QuizMakerModel.AspNetUserRoles">
+      <End Role="AspNetRole" EntitySet="AspNetRoles" />
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+    </AssociationSet>
+    <EntitySet Name="CorrectAnswers" EntityType="QuizMakerModel.CorrectAnswer" />
+    <AssociationSet Name="FK_CorrectAnswer_PossibleAnswer" Association="QuizMakerModel.FK_CorrectAnswer_PossibleAnswer">
+      <End Role="PossibleAnswer" EntitySet="PossibleAnswers" />
+      <End Role="CorrectAnswer" EntitySet="CorrectAnswers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CorrectAnswer_Questions" Association="QuizMakerModel.FK_CorrectAnswer_Questions">
+      <End Role="Question" EntitySet="Questions" />
+      <End Role="CorrectAnswer" EntitySet="CorrectAnswers" />
+    </AssociationSet>
+    <EntitySet Name="Statistics" EntityType="QuizMakerModel.Statistic" />
+    <AssociationSet Name="FK_SurveyStatistics_AspNetUsers1" Association="QuizMakerModel.FK_SurveyStatistics_AspNetUsers1">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="Statistic" EntitySet="Statistics" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SurveyStatistics_Answer1" Association="QuizMakerModel.FK_SurveyStatistics_Answer1">
+      <End Role="PossibleAnswer" EntitySet="PossibleAnswers" />
+      <End Role="Statistic" EntitySet="Statistics" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AllAnswers_Questions1" Association="QuizMakerModel.FK_AllAnswers_Questions1">
+      <End Role="Question" EntitySet="Questions" />
+      <End Role="Statistic" EntitySet="Statistics" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SurveyStatistics_Quizzes1" Association="QuizMakerModel.FK_SurveyStatistics_Quizzes1">
+      <End Role="Quiz" EntitySet="Quizs" />
+      <End Role="Statistic" EntitySet="Statistics" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TeamMembers_Quiz" Association="QuizMakerModel.FK_TeamMembers_Quiz">
+      <End Role="Quiz" EntitySet="Quizs" />
+      <End Role="TeamMember" EntitySet="TeamMembers" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="C__MigrationHistory">
     <Key>
-      <PropertyRef Name="Id" />
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
     </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="RoleId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MigrationId" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="ContextKey" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="Model" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+    <Property Name="ProductVersion" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="AspNetRole">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ConcurrencyStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-    <Property Name="NormalizedName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUsers" Relationship="QuizMakerModel.AspNetUserRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
   </EntityType>
   <EntityType Name="AspNetUserClaim">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int64" Nullable="false" />
     <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="UserId" Type="Int64" Nullable="false" />
-    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_AspNetUserClaims_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+    <NavigationProperty Name="AspNetUser" Relationship="QuizMakerModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaim" ToRole="AspNetUser" />
   </EntityType>
   <EntityType Name="AspNetUserLogin">
     <Key>
       <PropertyRef Name="LoginProvider" />
       <PropertyRef Name="ProviderKey" />
-    </Key>
-    <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="ProviderDisplayName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="UserId" Type="Int64" Nullable="false" />
-    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_AspNetUserLogins_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
-  </EntityType>
-  <EntityType Name="AspNetUserRole">
-    <Key>
       <PropertyRef Name="UserId" />
-      <PropertyRef Name="RoleId" />
     </Key>
+    <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
     <Property Name="UserId" Type="Int64" Nullable="false" />
-    <Property Name="RoleId" Type="Int64" Nullable="false" />
-    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_AspNetUserRoles_AspNetUsers_UserId" FromRole="AspNetUserRoles" ToRole="AspNetUsers" />
+    <NavigationProperty Name="AspNetUser" Relationship="QuizMakerModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogin" ToRole="AspNetUser" />
   </EntityType>
   <EntityType Name="AspNetUser">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
-    <Property Name="ConcurrencyStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
     <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
-    <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
-    <Property Name="LockoutEnd" Type="DateTimeOffset" Precision="7" />
-    <Property Name="NormalizedEmail" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-    <Property Name="NormalizedUserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
     <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
-    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
-    <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_AspNetUserClaims_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
-    <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_AspNetUserLogins_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
-    <NavigationProperty Name="AspNetUserRoles" Relationship="Self.FK_AspNetUserRoles_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserRoles" />
-    <NavigationProperty Name="Quizzes" Relationship="Self.FK_Quiz_Owner" FromRole="AspNetUsers" ToRole="Quizzes" />
-    <NavigationProperty Name="StatisticalLists" Relationship="Self.FK_StatisticalLists_AspNetUsers" FromRole="AspNetUsers" ToRole="StatisticalLists" />
-    <NavigationProperty Name="SurveyStatistics" Relationship="Self.FK_SurveyStatistics_AspNetUsers" FromRole="AspNetUsers" ToRole="SurveyStatistics" />
-    <NavigationProperty Name="TeamMembers" Relationship="Self.FK_TeamMembers_Users" FromRole="AspNetUsers" ToRole="TeamMembers" />
-  </EntityType>
-  <EntityType Name="AspNetUserToken">
-    <Key>
-      <PropertyRef Name="UserId" />
-      <PropertyRef Name="LoginProvider" />
-      <PropertyRef Name="Name" />
-    </Key>
-    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+    <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUserClaims" Relationship="QuizMakerModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
+    <NavigationProperty Name="AspNetUserLogins" Relationship="QuizMakerModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
+    <NavigationProperty Name="Quizzes" Relationship="QuizMakerModel.FK_Quiz_Owner" FromRole="AspNetUser" ToRole="Quizze" />
+    <NavigationProperty Name="TeamMembers" Relationship="QuizMakerModel.FK_TeamMembers_Users" FromRole="AspNetUser" ToRole="TeamMember" />
+    <NavigationProperty Name="AspNetRoles" Relationship="QuizMakerModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
+    <NavigationProperty Name="Statistics" Relationship="QuizMakerModel.FK_SurveyStatistics_AspNetUsers1" FromRole="AspNetUser" ToRole="Statistic" />
   </EntityType>
   <EntityType Name="Category">
     <Key>
@@ -94,30 +144,34 @@
     <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Parent_id" Type="Int64" Nullable="false" />
     <Property Name="Partible" Type="Byte" Nullable="false" />
-    <NavigationProperty Name="Quizzes" Relationship="Self.FK_Quizzes_Categories" FromRole="Categories" ToRole="Quizzes" />
+    <NavigationProperty Name="Quizzes" Relationship="QuizMakerModel.FK_Quizzes_Categories" FromRole="Category" ToRole="Quizze" />
   </EntityType>
   <EntityType Name="PossibleAnswer">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="text" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="Question_Id" Type="Int64" Nullable="false" />
     <Property Name="Answer_number" Type="Int32" />
-    <NavigationProperty Name="Question" Relationship="Self.FK_PossibleAnswers_Question" FromRole="PossibleAnswers" ToRole="Questions" />
+    <NavigationProperty Name="Question" Relationship="QuizMakerModel.FK_PossibleAnswers_Question" FromRole="PossibleAnswer" ToRole="Question" />
+    <NavigationProperty Name="CorrectAnswers" Relationship="QuizMakerModel.FK_CorrectAnswer_PossibleAnswer" FromRole="PossibleAnswer" ToRole="CorrectAnswer" />
+    <NavigationProperty Name="Statistics" Relationship="QuizMakerModel.FK_SurveyStatistics_Answer1" FromRole="PossibleAnswer" ToRole="Statistic" />
   </EntityType>
   <EntityType Name="Question">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Question_text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="Question_number" Type="Int32" Nullable="false" />
-    <Property Name="Correct_answer" Type="Int64" />
+    <Property Name="Question_text" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Question_number" Type="Int32" />
     <Property Name="Quiz_Id" Type="Int64" Nullable="false" />
-    <NavigationProperty Name="PossibleAnswers" Relationship="Self.FK_PossibleAnswers_Question" FromRole="Questions" ToRole="PossibleAnswers" />
-    <NavigationProperty Name="SurveyStatistics" Relationship="Self.FK_AllAnswers_Questions" FromRole="Questions" ToRole="SurveyStatistics" />
-    <NavigationProperty Name="Quizze" Relationship="Self.FK_Quiz_Questions" FromRole="Questions" ToRole="Quizzes" />
+    <NavigationProperty Name="PossibleAnswers" Relationship="QuizMakerModel.FK_PossibleAnswers_Question" FromRole="Question" ToRole="PossibleAnswer" />
+    <NavigationProperty Name="Quizze" Relationship="QuizMakerModel.FK_Quiz_Questions" FromRole="Question" ToRole="Quizze" />
+    <NavigationProperty Name="CorrectAnswers" Relationship="QuizMakerModel.FK_CorrectAnswer_Questions" FromRole="Question" ToRole="CorrectAnswer" />
+    <Property Name="Points" Type="Int32" />
+    <NavigationProperty Name="Statistics" Relationship="QuizMakerModel.FK_AllAnswers_Questions1" FromRole="Question" ToRole="Statistic" />
+    <Property Name="ReadOnly" Type="Boolean" />
   </EntityType>
   <EntityType Name="Quiz">
     <Key>
@@ -126,318 +180,225 @@
     <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Owners_Id" Type="Int64" Nullable="false" />
-    <Property Name="Team_Id" Type="Int64" />
     <Property Name="Category_Id" Type="Int64" />
-    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Quiz_Owner" FromRole="Quizzes" ToRole="AspNetUsers" />
-    <NavigationProperty Name="Category" Relationship="Self.FK_Quizzes_Categories" FromRole="Quizzes" ToRole="Categories" />
-    <NavigationProperty Name="Questions" Relationship="Self.FK_Quiz_Questions" FromRole="Quizzes" ToRole="Questions" />
-    <NavigationProperty Name="Team" Relationship="Self.FK_Quizzes_Teams" FromRole="Quizzes" ToRole="Teams" />
-    <NavigationProperty Name="SurveyStatistics" Relationship="Self.FK_SurveyStatistics_Quizzes" FromRole="Quizzes" ToRole="SurveyStatistics" />
-    <NavigationProperty Name="StatisticalLists" Relationship="QuizMakerModel.FK_StatisticalLists_Quizzes" FromRole="Quiz" ToRole="StatisticalList" />
-  </EntityType>
-  <EntityType Name="StatisticalList">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Quiz_Id" Type="Int64" Nullable="false" />
-    <Property Name="User_Id" Type="Int64" Nullable="false" />
-    <Property Name="Points" Type="Int32" />
-    <Property Name="Vote" Type="Byte" />
-    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_StatisticalLists_AspNetUsers" FromRole="StatisticalLists" ToRole="AspNetUsers" />
-    <NavigationProperty Name="Quizze" Relationship="QuizMakerModel.FK_StatisticalLists_Quizzes" FromRole="StatisticalList" ToRole="Quiz" />
-  </EntityType>
-  <EntityType Name="SurveyStatistic">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Question_Id" Type="Int64" Nullable="false" />
-    <Property Name="Answer_number" Type="Int32" />
-    <Property Name="Quiz_Id" Type="Int64" Nullable="false" />
-    <Property Name="User_Id" Type="Int64" Nullable="false" />
-    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_SurveyStatistics_AspNetUsers" FromRole="SurveyStatistics" ToRole="AspNetUsers" />
-    <NavigationProperty Name="Question" Relationship="Self.FK_AllAnswers_Questions" FromRole="SurveyStatistics" ToRole="Questions" />
-    <NavigationProperty Name="Quizze" Relationship="Self.FK_SurveyStatistics_Quizzes" FromRole="SurveyStatistics" ToRole="Quizzes" />
+    <NavigationProperty Name="AspNetUser" Relationship="QuizMakerModel.FK_Quiz_Owner" FromRole="Quizze" ToRole="AspNetUser" />
+    <NavigationProperty Name="Category" Relationship="QuizMakerModel.FK_Quizzes_Categories" FromRole="Quizze" ToRole="Category" />
+    <NavigationProperty Name="Questions" Relationship="QuizMakerModel.FK_Quiz_Questions" FromRole="Quizze" ToRole="Question" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Statistics" Relationship="QuizMakerModel.FK_SurveyStatistics_Quizzes1" FromRole="Quiz" ToRole="Statistic" />
+    <NavigationProperty Name="TeamMembers" Relationship="QuizMakerModel.FK_TeamMembers_Quiz" FromRole="Quiz" ToRole="TeamMember" />
+    <Property Name="ReadOnly" Type="Boolean" />
   </EntityType>
   <EntityType Name="TeamMember">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Team_Id" Type="Int64" Nullable="false" />
     <Property Name="User_Id" Type="Int64" Nullable="false" />
-    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_TeamMembers_Users" FromRole="TeamMembers" ToRole="AspNetUsers" />
-    <NavigationProperty Name="Team" Relationship="Self.FK_TeamMembers_Team" FromRole="TeamMembers" ToRole="Teams" />
+    <NavigationProperty Name="AspNetUser" Relationship="QuizMakerModel.FK_TeamMembers_Users" FromRole="TeamMember" ToRole="AspNetUser" />
+    <Property Name="Quiz_Id" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Quizze" Relationship="QuizMakerModel.FK_TeamMembers_Quiz" FromRole="TeamMember" ToRole="Quiz" />
+    <Property Name="Username" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
   </EntityType>
-  <EntityType Name="Team">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="Quizzes" Relationship="Self.FK_Quizzes_Teams" FromRole="Teams" ToRole="Quizzes" />
-    <NavigationProperty Name="TeamMembers" Relationship="Self.FK_TeamMembers_Team" FromRole="Teams" ToRole="TeamMembers" />
-  </EntityType>
-  <Association Name="FK_AspNetUserClaims_AspNetUsers_UserId">
-    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+    <End Type="QuizMakerModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
-    <End Role="AspNetUserClaims" Type="Self.AspNetUserClaim" Multiplicity="*" />
+    <End Type="QuizMakerModel.AspNetUserClaim" Role="AspNetUserClaim" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="AspNetUsers">
+      <Principal Role="AspNetUser">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="AspNetUserClaims">
+      <Dependent Role="AspNetUserClaim">
         <PropertyRef Name="UserId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_AspNetUserLogins_AspNetUsers_UserId">
-    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Type="QuizMakerModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
-    <End Role="AspNetUserLogins" Type="Self.AspNetUserLogin" Multiplicity="*" />
+    <End Type="QuizMakerModel.AspNetUserLogin" Role="AspNetUserLogin" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="AspNetUsers">
+      <Principal Role="AspNetUser">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="AspNetUserLogins">
-        <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_AspNetUserRoles_AspNetUsers_UserId">
-    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="AspNetUserRoles" Type="Self.AspNetUserRole" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AspNetUsers">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="AspNetUserRoles">
+      <Dependent Role="AspNetUserLogin">
         <PropertyRef Name="UserId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Quiz_Owner">
-    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
-    <End Role="Quizzes" Type="QuizMakerModel.Quiz" Multiplicity="*" />
+    <End Type="QuizMakerModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+    <End Type="QuizMakerModel.Quiz" Role="Quizze" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="AspNetUsers">
+      <Principal Role="AspNetUser">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="Quizzes">
+      <Dependent Role="Quizze">
         <PropertyRef Name="Owners_Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_StatisticalLists_AspNetUsers">
-    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
-    <End Role="StatisticalLists" Type="Self.StatisticalList" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AspNetUsers">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="StatisticalLists">
-        <PropertyRef Name="User_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_SurveyStatistics_AspNetUsers">
-    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
-    <End Role="SurveyStatistics" Type="Self.SurveyStatistic" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AspNetUsers">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="SurveyStatistics">
-        <PropertyRef Name="User_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_TeamMembers_Users">
-    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
-    <End Role="TeamMembers" Type="Self.TeamMember" Multiplicity="*" />
+    <End Type="QuizMakerModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+    <End Type="QuizMakerModel.TeamMember" Role="TeamMember" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="AspNetUsers">
+      <Principal Role="AspNetUser">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="TeamMembers">
+      <Dependent Role="TeamMember">
         <PropertyRef Name="User_Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Quizzes_Categories">
-    <End Role="Categories" Type="Self.Category" Multiplicity="0..1" />
-    <End Role="Quizzes" Type="QuizMakerModel.Quiz" Multiplicity="*" />
+    <End Type="QuizMakerModel.Category" Role="Category" Multiplicity="0..1" />
+    <End Type="QuizMakerModel.Quiz" Role="Quizze" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Categories">
+      <Principal Role="Category">
         <PropertyRef Name="id" />
       </Principal>
-      <Dependent Role="Quizzes">
+      <Dependent Role="Quizze">
         <PropertyRef Name="Category_Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_PossibleAnswers_Question">
-    <End Role="Questions" Type="Self.Question" Multiplicity="1" />
-    <End Role="PossibleAnswers" Type="Self.PossibleAnswer" Multiplicity="*" />
+    <End Type="QuizMakerModel.Question" Role="Question" Multiplicity="1" />
+    <End Type="QuizMakerModel.PossibleAnswer" Role="PossibleAnswer" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Questions">
+      <Principal Role="Question">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="PossibleAnswers">
-        <PropertyRef Name="Question_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_AllAnswers_Questions">
-    <End Role="Questions" Type="Self.Question" Multiplicity="1" />
-    <End Role="SurveyStatistics" Type="Self.SurveyStatistic" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Questions">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="SurveyStatistics">
+      <Dependent Role="PossibleAnswer">
         <PropertyRef Name="Question_Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Quiz_Questions">
-    <End Role="Quizzes" Type="QuizMakerModel.Quiz" Multiplicity="1" />
-    <End Role="Questions" Type="Self.Question" Multiplicity="*" />
+    <End Type="QuizMakerModel.Quiz" Role="Quizze" Multiplicity="1" />
+    <End Type="QuizMakerModel.Question" Role="Question" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Quizzes">
+      <Principal Role="Quizze">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="Questions">
+      <Dependent Role="Question">
         <PropertyRef Name="Quiz_Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Quizzes_Teams">
-    <End Role="Teams" Type="Self.Team" Multiplicity="0..1" />
-    <End Role="Quizzes" Type="QuizMakerModel.Quiz" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Teams">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="Quizzes">
-        <PropertyRef Name="Team_Id" />
-      </Dependent>
-    </ReferentialConstraint>
+  <Association Name="AspNetUserRoles">
+    <End Type="QuizMakerModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
+    <End Type="QuizMakerModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
   </Association>
-  <Association Name="FK_SurveyStatistics_Quizzes">
-    <End Role="Quizzes" Type="QuizMakerModel.Quiz" Multiplicity="1" />
-    <End Role="SurveyStatistics" Type="Self.SurveyStatistic" Multiplicity="*" />
+  <EntityType Name="CorrectAnswer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="PossibleAnswer" Type="Int64" />
+    <Property Name="Question" Type="Int64" Nullable="false" />
+    <Property Name="Id" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="PossibleAnswer1" Relationship="QuizMakerModel.FK_CorrectAnswer_PossibleAnswer" FromRole="CorrectAnswer" ToRole="PossibleAnswer" />
+    <NavigationProperty Name="Question1" Relationship="QuizMakerModel.FK_CorrectAnswer_Questions" FromRole="CorrectAnswer" ToRole="Question" />
+    <Property Name="Answer" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_CorrectAnswer_PossibleAnswer">
+    <End Type="QuizMakerModel.PossibleAnswer" Role="PossibleAnswer" Multiplicity="0..1" />
+    <End Type="QuizMakerModel.CorrectAnswer" Role="CorrectAnswer" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Quizzes">
+      <Principal Role="PossibleAnswer">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="SurveyStatistics">
-        <PropertyRef Name="Quiz_Id" />
+      <Dependent Role="CorrectAnswer">
+        <PropertyRef Name="PossibleAnswer" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_TeamMembers_Team">
-    <End Role="Teams" Type="Self.Team" Multiplicity="1" />
-    <End Role="TeamMembers" Type="Self.TeamMember" Multiplicity="*" />
+  <Association Name="FK_CorrectAnswer_Questions">
+    <End Type="QuizMakerModel.Question" Role="Question" Multiplicity="1" />
+    <End Type="QuizMakerModel.CorrectAnswer" Role="CorrectAnswer" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Teams">
-        <PropertyRef Name="id" />
+      <Principal Role="Question">
+        <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="TeamMembers">
-        <PropertyRef Name="Team_Id" />
+      <Dependent Role="CorrectAnswer">
+        <PropertyRef Name="Question" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="QuizMakerEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="AspNetRoleClaims" EntityType="Self.AspNetRoleClaim" />
-    <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
-    <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
-    <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
-    <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRole" />
-    <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
-    <EntitySet Name="AspNetUserTokens" EntityType="Self.AspNetUserToken" />
-    <EntitySet Name="Categories" EntityType="Self.Category" />
-    <EntitySet Name="PossibleAnswers" EntityType="Self.PossibleAnswer" />
-    <EntitySet Name="Questions" EntityType="Self.Question" />
-    <EntitySet Name="Quizs" EntityType="QuizMakerModel.Quiz" />
-    <EntitySet Name="StatisticalLists" EntityType="Self.StatisticalList" />
-    <EntitySet Name="SurveyStatistics" EntityType="Self.SurveyStatistic" />
-    <EntitySet Name="TeamMembers" EntityType="Self.TeamMember" />
-    <EntitySet Name="Teams" EntityType="Self.Team" />
-    <AssociationSet Name="FK_AspNetUserClaims_AspNetUsers_UserId" Association="Self.FK_AspNetUserClaims_AspNetUsers_UserId">
-      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-      <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
-    </AssociationSet>
-    <AssociationSet Name="FK_AspNetUserLogins_AspNetUsers_UserId" Association="Self.FK_AspNetUserLogins_AspNetUsers_UserId">
-      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-      <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
-    </AssociationSet>
-    <AssociationSet Name="FK_AspNetUserRoles_AspNetUsers_UserId" Association="Self.FK_AspNetUserRoles_AspNetUsers_UserId">
-      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-      <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Quiz_Owner" Association="Self.FK_Quiz_Owner">
-      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-      <End Role="Quizzes" EntitySet="Quizs" />
-    </AssociationSet>
-    <AssociationSet Name="FK_StatisticalLists_AspNetUsers" Association="Self.FK_StatisticalLists_AspNetUsers">
-      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-      <End Role="StatisticalLists" EntitySet="StatisticalLists" />
-    </AssociationSet>
-    <AssociationSet Name="FK_SurveyStatistics_AspNetUsers" Association="Self.FK_SurveyStatistics_AspNetUsers">
-      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-      <End Role="SurveyStatistics" EntitySet="SurveyStatistics" />
-    </AssociationSet>
-    <AssociationSet Name="FK_TeamMembers_Users" Association="Self.FK_TeamMembers_Users">
-      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-      <End Role="TeamMembers" EntitySet="TeamMembers" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Quizzes_Categories" Association="Self.FK_Quizzes_Categories">
-      <End Role="Categories" EntitySet="Categories" />
-      <End Role="Quizzes" EntitySet="Quizs" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PossibleAnswers_Question" Association="Self.FK_PossibleAnswers_Question">
-      <End Role="Questions" EntitySet="Questions" />
-      <End Role="PossibleAnswers" EntitySet="PossibleAnswers" />
-    </AssociationSet>
-    <AssociationSet Name="FK_AllAnswers_Questions" Association="Self.FK_AllAnswers_Questions">
-      <End Role="Questions" EntitySet="Questions" />
-      <End Role="SurveyStatistics" EntitySet="SurveyStatistics" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Quiz_Questions" Association="Self.FK_Quiz_Questions">
-      <End Role="Quizzes" EntitySet="Quizs" />
-      <End Role="Questions" EntitySet="Questions" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Quizzes_Teams" Association="Self.FK_Quizzes_Teams">
-      <End Role="Teams" EntitySet="Teams" />
-      <End Role="Quizzes" EntitySet="Quizs" />
-    </AssociationSet>
-    <AssociationSet Name="FK_SurveyStatistics_Quizzes" Association="Self.FK_SurveyStatistics_Quizzes">
-      <End Role="Quizzes" EntitySet="Quizs" />
-      <End Role="SurveyStatistics" EntitySet="SurveyStatistics" />
-    </AssociationSet>
-    <AssociationSet Name="FK_TeamMembers_Team" Association="Self.FK_TeamMembers_Team">
-      <End Role="Teams" EntitySet="Teams" />
-      <End Role="TeamMembers" EntitySet="TeamMembers" />
-    </AssociationSet>
-    <AssociationSet Name="FK_StatisticalLists_Quizzes" Association="QuizMakerModel.FK_StatisticalLists_Quizzes">
-      <End Role="Quiz" EntitySet="Quizs" />
-      <End Role="StatisticalList" EntitySet="StatisticalLists" />
-    </AssociationSet>
-  </EntityContainer>
-  <Association Name="FK_StatisticalLists_Quizzes">
+  <EntityType Name="Statistic">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Question_Id" Type="Int64" Nullable="false" />
+    <Property Name="Answer" Type="Int64" />
+    <Property Name="Quiz_Id" Type="Int64" Nullable="false" />
+    <Property Name="User_Id" Type="Int64" Nullable="false" />
+    <Property Name="Answer_text" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Points" Type="Int32" />
+    <NavigationProperty Name="AspNetUser" Relationship="QuizMakerModel.FK_SurveyStatistics_AspNetUsers1" FromRole="Statistic" ToRole="AspNetUser" />
+    <NavigationProperty Name="PossibleAnswer" Relationship="QuizMakerModel.FK_SurveyStatistics_Answer1" FromRole="Statistic" ToRole="PossibleAnswer" />
+    <NavigationProperty Name="Question" Relationship="QuizMakerModel.FK_AllAnswers_Questions1" FromRole="Statistic" ToRole="Question" />
+    <NavigationProperty Name="Quizze" Relationship="QuizMakerModel.FK_SurveyStatistics_Quizzes1" FromRole="Statistic" ToRole="Quiz" />
+  </EntityType>
+  <Association Name="FK_SurveyStatistics_AspNetUsers1">
+    <End Type="QuizMakerModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+    <End Type="QuizMakerModel.Statistic" Role="Statistic" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Statistic">
+        <PropertyRef Name="User_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SurveyStatistics_Answer1">
+    <End Type="QuizMakerModel.PossibleAnswer" Role="PossibleAnswer" Multiplicity="0..1" />
+    <End Type="QuizMakerModel.Statistic" Role="Statistic" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PossibleAnswer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Statistic">
+        <PropertyRef Name="Answer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AllAnswers_Questions1">
+    <End Type="QuizMakerModel.Question" Role="Question" Multiplicity="1" />
+    <End Type="QuizMakerModel.Statistic" Role="Statistic" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Question">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Statistic">
+        <PropertyRef Name="Question_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SurveyStatistics_Quizzes1">
     <End Type="QuizMakerModel.Quiz" Role="Quiz" Multiplicity="1" />
-    <End Type="QuizMakerModel.StatisticalList" Role="StatisticalList" Multiplicity="*" />
+    <End Type="QuizMakerModel.Statistic" Role="Statistic" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Quiz">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="StatisticalList">
+      <Dependent Role="Statistic">
+        <PropertyRef Name="Quiz_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TeamMembers_Quiz">
+    <End Type="QuizMakerModel.Quiz" Role="Quiz" Multiplicity="1" />
+    <End Type="QuizMakerModel.TeamMember" Role="TeamMember" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Quiz">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TeamMember">
         <PropertyRef Name="Quiz_Id" />
       </Dependent>
     </ReferentialConstraint>

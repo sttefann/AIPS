@@ -1,0 +1,34 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<div class="row">
+    <div class="col-xs-12">
+        <div class="jumbotron">
+            <h1>Quiz Maker</h1>
+            <p class="lead" >QuizMaker is a free web site for building great Tests, Surveys and Polls.</p>
+            
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <h2>Create Quiz</h2>
+                <p>
+                    QuizMaker gives you a powerful, patterns-based way to build quizzes that
+                    can be different types like test,survey and poll. You can build tests and surveys with your friends toghether.
+                </p>
+                <p><a class="btn btn-inverse" href="@Url.Action("Create", "Quiz")">Learn more &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>You'r dashboard</h2>
+                <p>Dashboard is page with all of your quizzes, stats and controls for creating new quiz. Check it out!</p>
+                <p><a class="btn btn-inverse" href="@Url.Action("Dashboard", "Home")">Learn more &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>Categories</h2>
+                <p>You can easily find a quiz,  that your looking for, by category. Categories are displayed with composite pattern for easy store and display.</p>
+                <p><a class="btn btn-inverse" href="@Url.Action("Category", "Home")">Learn more &raquo;</a></p>
+            </div>
+        </div>
+        </div>
+</div>
+

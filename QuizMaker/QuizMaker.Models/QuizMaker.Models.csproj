@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2B2E21E5-528D-4F15-8F81-439DE5329BC4}</ProjectGuid>
+    <ProjectGuid>{C18DB902-403C-4256-8348-EAE48EE241CB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>QuizMaker.Models</RootNamespace>
     <AssemblyName>QuizMaker.Models</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,11 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -48,23 +44,50 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnswerModel\Answer.cs" />
     <Compile Include="CategoryModel\CategoryModel.cs" />
+    <Compile Include="CategoryModel\GroupCategory.cs" />
+    <Compile Include="CategoryModel\ICategory.cs" />
+    <Compile Include="CategoryModel\LeafCategory.cs" />
+    <Compile Include="Enums\QuizType.cs" />
+    <Compile Include="Item\ItemModel.cs" />
+    <Compile Include="Item\ItemReadOnly.cs" />
+    <Compile Include="Item\ItemTypeModel.cs" />
+    <Compile Include="Item\ResultsItem.cs" />
+    <Compile Include="Item\SurveyItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuestionModels\AnswerItem.cs" />
+    <Compile Include="QuestionModels\QuestionCreateModel.cs" />
+    <Compile Include="QuestionModels\QuestionEditModel.cs" />
     <Compile Include="QuestionModels\QuestionModel.cs" />
+    <Compile Include="QuestionModels\QuestionM.cs" />
+    <Compile Include="QuestionModels\QuestionPlayedModel.cs" />
+    <Compile Include="QuestionModels\QuestionPlayModel.cs" />
+    <Compile Include="QuestionModels\QuestionViewModel.cs" />
+    <Compile Include="QuizModels\QQModel.cs" />
+    <Compile Include="QuizModels\QuizCreateModel.cs" />
+    <Compile Include="QuizModels\QuizEditModel.cs" />
     <Compile Include="QuizModels\QuizModel.cs" />
+    <Compile Include="QuizModels\QuizPlayModel.cs" />
+    <Compile Include="QuizModels\QuizTeamModel.cs" />
+    <Compile Include="QuizModels\QuizzCategoryModel.cs" />
+    <Compile Include="StatisticsModel\PollStats.cs" />
     <Compile Include="StatisticsModel\StatisticalListModel.cs" />
+    <Compile Include="StatisticsModel\StatisticsCreateModel.cs" />
+    <Compile Include="StatisticsModel\StatisticsModel.cs" />
+    <Compile Include="StatisticsModel\Stats.cs" />
     <Compile Include="StatisticsModel\SurveyStatisticModel.cs" />
-    <Compile Include="TeamModel\TeamModel.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
+    <Compile Include="StatisticsModel\SurveyStats.cs" />
+    <Compile Include="StatisticsModel\TestRankList.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QuizMaker.DAL\QuizMaker.DAL.csproj">
-      <Project>{A98AF83D-98A9-4E99-B039-924D6AC83219}</Project>
+      <Project>{d440a455-7173-4d1a-850b-07d2d721ef17}</Project>
       <Name>QuizMaker.DAL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

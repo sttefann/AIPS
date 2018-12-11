@@ -1,40 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="QuizMakerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityType Name="AspNetRoleClaims">
+  <EntityType Name="__MigrationHistory">
     <Key>
-      <PropertyRef Name="Id" />
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
     </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="ClaimType" Type="nvarchar(max)" />
-    <Property Name="ClaimValue" Type="nvarchar(max)" />
-    <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+    <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+    <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
   </EntityType>
   <EntityType Name="AspNetRoles">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="ConcurrencyStamp" Type="nvarchar(max)" />
-    <Property Name="Name" Type="nvarchar" MaxLength="256" />
-    <Property Name="NormalizedName" Type="nvarchar" MaxLength="256" />
+    <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
   </EntityType>
   <EntityType Name="AspNetUserClaims">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="bigint" Nullable="false" />
     <Property Name="ClaimType" Type="nvarchar(max)" />
     <Property Name="ClaimValue" Type="nvarchar(max)" />
-    <Property Name="UserId" Type="bigint" Nullable="false" />
   </EntityType>
   <EntityType Name="AspNetUserLogins">
     <Key>
       <PropertyRef Name="LoginProvider" />
       <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
     </Key>
     <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
     <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="ProviderDisplayName" Type="nvarchar(max)" />
     <Property Name="UserId" Type="bigint" Nullable="false" />
   </EntityType>
   <EntityType Name="AspNetUserRoles">
@@ -50,31 +49,17 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="AccessFailedCount" Type="int" Nullable="false" />
-    <Property Name="ConcurrencyStamp" Type="nvarchar(max)" />
     <Property Name="Email" Type="nvarchar" MaxLength="256" />
     <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
-    <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
-    <Property Name="LockoutEnd" Type="datetimeoffset" Precision="7" />
-    <Property Name="NormalizedEmail" Type="nvarchar" MaxLength="256" />
-    <Property Name="NormalizedUserName" Type="nvarchar" MaxLength="256" />
     <Property Name="PasswordHash" Type="nvarchar(max)" />
+    <Property Name="SecurityStamp" Type="nvarchar(max)" />
     <Property Name="PhoneNumber" Type="nvarchar(max)" />
     <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
-    <Property Name="SecurityStamp" Type="nvarchar(max)" />
     <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
-    <Property Name="UserName" Type="nvarchar" MaxLength="256" />
-  </EntityType>
-  <EntityType Name="AspNetUserTokens">
-    <Key>
-      <PropertyRef Name="UserId" />
-      <PropertyRef Name="LoginProvider" />
-      <PropertyRef Name="Name" />
-    </Key>
-    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="Name" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="Value" Type="nvarchar(max)" />
+    <Property Name="LockoutEndDateUtc" Type="datetime" />
+    <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
   </EntityType>
   <EntityType Name="Categories">
     <Key>
@@ -84,6 +69,15 @@
     <Property Name="Name" Type="nvarchar" MaxLength="50" />
     <Property Name="Parent_id" Type="bigint" Nullable="false" />
     <Property Name="Partible" Type="tinyint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CorrectAnswer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PossibleAnswer" Type="bigint" />
+    <Property Name="Question" Type="bigint" Nullable="false" />
+    <Property Name="Answer" Type="nvarchar" MaxLength="150" />
   </EntityType>
   <EntityType Name="PossibleAnswers">
     <Key>
@@ -100,9 +94,10 @@
     </Key>
     <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Question_text" Type="text" Nullable="false" />
-    <Property Name="Question_number" Type="int" Nullable="false" />
-    <Property Name="Correct_answer" Type="bigint" />
+    <Property Name="Question_number" Type="int" />
     <Property Name="Quiz_Id" Type="bigint" Nullable="false" />
+    <Property Name="Points" Type="int" />
+    <Property Name="ReadOnly" Type="bit" />
   </EntityType>
   <EntityType Name="Quizzes">
     <Key>
@@ -111,57 +106,68 @@
     <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="50" />
     <Property Name="Owners_Id" Type="bigint" Nullable="false" />
-    <Property Name="Team_Id" Type="bigint" />
     <Property Name="Category_Id" Type="bigint" />
+    <Property Name="Type" Type="int" Nullable="false" />
+    <Property Name="ReadOnly" Type="bit" />
   </EntityType>
-  <EntityType Name="StatisticalLists">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Quiz_Id" Type="bigint" Nullable="false" />
-    <Property Name="User_Id" Type="bigint" Nullable="false" />
-    <Property Name="Points" Type="int" />
-    <Property Name="Vote" Type="tinyint" />
-  </EntityType>
-  <EntityType Name="SurveyStatistics">
+  <EntityType Name="Statistics">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Question_Id" Type="bigint" Nullable="false" />
-    <Property Name="Answer_number" Type="int" />
+    <Property Name="Answer" Type="bigint" />
     <Property Name="Quiz_Id" Type="bigint" Nullable="false" />
     <Property Name="User_Id" Type="bigint" Nullable="false" />
+    <Property Name="Answer_text" Type="nvarchar" MaxLength="50" />
+    <Property Name="Points" Type="int" />
   </EntityType>
   <EntityType Name="TeamMembers">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Team_Id" Type="bigint" Nullable="false" />
+    <Property Name="Quiz_Id" Type="bigint" Nullable="false" />
     <Property Name="User_Id" Type="bigint" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Teams">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Username" Type="nvarchar" MaxLength="256" />
   </EntityType>
   <Association Name="FK_AllAnswers_Questions">
     <End Role="Questions" Type="Self.Questions" Multiplicity="1" />
-    <End Role="SurveyStatistics" Type="Self.SurveyStatistics" Multiplicity="*" />
+    <End Role="Statistics" Type="Self.Statistics" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Questions">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="SurveyStatistics">
+      <Dependent Role="Statistics">
         <PropertyRef Name="Question_Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_AspNetUserClaims_AspNetUsers_UserId">
+  <Association Name="FK_CorrectAnswer_PossibleAnswer">
+    <End Role="PossibleAnswers" Type="Self.PossibleAnswers" Multiplicity="0..1" />
+    <End Role="CorrectAnswer" Type="Self.CorrectAnswer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PossibleAnswers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CorrectAnswer">
+        <PropertyRef Name="PossibleAnswer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CorrectAnswer_Questions">
+    <End Role="Questions" Type="Self.Questions" Multiplicity="1" />
+    <End Role="CorrectAnswer" Type="Self.CorrectAnswer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Questions">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CorrectAnswer">
+        <PropertyRef Name="Question" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
     <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
@@ -175,7 +181,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_AspNetUserLogins_AspNetUsers_UserId">
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
     <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
@@ -189,7 +195,21 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_AspNetUserRoles_AspNetUsers_UserId">
+  <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+    <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetRoles">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserRoles">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
     <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
@@ -251,75 +271,51 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Quizzes_Teams">
-    <End Role="Teams" Type="Self.Teams" Multiplicity="0..1" />
-    <End Role="Quizzes" Type="Self.Quizzes" Multiplicity="*" />
+  <Association Name="FK_SurveyStatistics_Answer">
+    <End Role="PossibleAnswers" Type="Self.PossibleAnswers" Multiplicity="0..1" />
+    <End Role="Statistics" Type="Self.Statistics" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Teams">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="Quizzes">
-        <PropertyRef Name="Team_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_StatisticalLists_AspNetUsers">
-    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-    <End Role="StatisticalLists" Type="Self.StatisticalLists" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="AspNetUsers">
+      <Principal Role="PossibleAnswers">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="StatisticalLists">
-        <PropertyRef Name="User_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_StatisticalLists_Quizzes">
-    <End Role="Quizzes" Type="Self.Quizzes" Multiplicity="1" />
-    <End Role="StatisticalLists" Type="Self.StatisticalLists" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Quizzes">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="StatisticalLists">
-        <PropertyRef Name="Quiz_Id" />
+      <Dependent Role="Statistics">
+        <PropertyRef Name="Answer" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_SurveyStatistics_AspNetUsers">
     <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-    <End Role="SurveyStatistics" Type="Self.SurveyStatistics" Multiplicity="*" />
+    <End Role="Statistics" Type="Self.Statistics" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="AspNetUsers">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="SurveyStatistics">
+      <Dependent Role="Statistics">
         <PropertyRef Name="User_Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_SurveyStatistics_Quizzes">
     <End Role="Quizzes" Type="Self.Quizzes" Multiplicity="1" />
-    <End Role="SurveyStatistics" Type="Self.SurveyStatistics" Multiplicity="*" />
+    <End Role="Statistics" Type="Self.Statistics" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Quizzes">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="SurveyStatistics">
+      <Dependent Role="Statistics">
         <PropertyRef Name="Quiz_Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_TeamMembers_Team">
-    <End Role="Teams" Type="Self.Teams" Multiplicity="1" />
+  <Association Name="FK_TeamMembers_Quiz">
+    <End Role="Quizzes" Type="Self.Quizzes" Multiplicity="1" />
     <End Role="TeamMembers" Type="Self.TeamMembers" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Teams">
-        <PropertyRef Name="id" />
+      <Principal Role="Quizzes">
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="TeamMembers">
-        <PropertyRef Name="Team_Id" />
+        <PropertyRef Name="Quiz_Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -336,34 +332,44 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="QuizMakerModelStoreContainer">
-    <EntitySet Name="AspNetRoleClaims" EntityType="Self.AspNetRoleClaims" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="AspNetUserTokens" EntityType="Self.AspNetUserTokens" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CorrectAnswer" EntityType="Self.CorrectAnswer" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PossibleAnswers" EntityType="Self.PossibleAnswers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Questions" EntityType="Self.Questions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Quizzes" EntityType="Self.Quizzes" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="StatisticalLists" EntityType="Self.StatisticalLists" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="SurveyStatistics" EntityType="Self.SurveyStatistics" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Statistics" EntityType="Self.Statistics" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TeamMembers" EntityType="Self.TeamMembers" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Teams" EntityType="Self.Teams" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_AllAnswers_Questions" Association="Self.FK_AllAnswers_Questions">
       <End Role="Questions" EntitySet="Questions" />
-      <End Role="SurveyStatistics" EntitySet="SurveyStatistics" />
+      <End Role="Statistics" EntitySet="Statistics" />
     </AssociationSet>
-    <AssociationSet Name="FK_AspNetUserClaims_AspNetUsers_UserId" Association="Self.FK_AspNetUserClaims_AspNetUsers_UserId">
+    <AssociationSet Name="FK_CorrectAnswer_PossibleAnswer" Association="Self.FK_CorrectAnswer_PossibleAnswer">
+      <End Role="PossibleAnswers" EntitySet="PossibleAnswers" />
+      <End Role="CorrectAnswer" EntitySet="CorrectAnswer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CorrectAnswer_Questions" Association="Self.FK_CorrectAnswer_Questions">
+      <End Role="Questions" EntitySet="Questions" />
+      <End Role="CorrectAnswer" EntitySet="CorrectAnswer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
     </AssociationSet>
-    <AssociationSet Name="FK_AspNetUserLogins_AspNetUsers_UserId" Association="Self.FK_AspNetUserLogins_AspNetUsers_UserId">
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
     </AssociationSet>
-    <AssociationSet Name="FK_AspNetUserRoles_AspNetUsers_UserId" Association="Self.FK_AspNetUserRoles_AspNetUsers_UserId">
+    <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+      <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+      <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
     </AssociationSet>
@@ -383,28 +389,20 @@
       <End Role="Categories" EntitySet="Categories" />
       <End Role="Quizzes" EntitySet="Quizzes" />
     </AssociationSet>
-    <AssociationSet Name="FK_Quizzes_Teams" Association="Self.FK_Quizzes_Teams">
-      <End Role="Teams" EntitySet="Teams" />
-      <End Role="Quizzes" EntitySet="Quizzes" />
-    </AssociationSet>
-    <AssociationSet Name="FK_StatisticalLists_AspNetUsers" Association="Self.FK_StatisticalLists_AspNetUsers">
-      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-      <End Role="StatisticalLists" EntitySet="StatisticalLists" />
-    </AssociationSet>
-    <AssociationSet Name="FK_StatisticalLists_Quizzes" Association="Self.FK_StatisticalLists_Quizzes">
-      <End Role="Quizzes" EntitySet="Quizzes" />
-      <End Role="StatisticalLists" EntitySet="StatisticalLists" />
+    <AssociationSet Name="FK_SurveyStatistics_Answer" Association="Self.FK_SurveyStatistics_Answer">
+      <End Role="PossibleAnswers" EntitySet="PossibleAnswers" />
+      <End Role="Statistics" EntitySet="Statistics" />
     </AssociationSet>
     <AssociationSet Name="FK_SurveyStatistics_AspNetUsers" Association="Self.FK_SurveyStatistics_AspNetUsers">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-      <End Role="SurveyStatistics" EntitySet="SurveyStatistics" />
+      <End Role="Statistics" EntitySet="Statistics" />
     </AssociationSet>
     <AssociationSet Name="FK_SurveyStatistics_Quizzes" Association="Self.FK_SurveyStatistics_Quizzes">
       <End Role="Quizzes" EntitySet="Quizzes" />
-      <End Role="SurveyStatistics" EntitySet="SurveyStatistics" />
+      <End Role="Statistics" EntitySet="Statistics" />
     </AssociationSet>
-    <AssociationSet Name="FK_TeamMembers_Team" Association="Self.FK_TeamMembers_Team">
-      <End Role="Teams" EntitySet="Teams" />
+    <AssociationSet Name="FK_TeamMembers_Quiz" Association="Self.FK_TeamMembers_Quiz">
+      <End Role="Quizzes" EntitySet="Quizzes" />
       <End Role="TeamMembers" EntitySet="TeamMembers" />
     </AssociationSet>
     <AssociationSet Name="FK_TeamMembers_Users" Association="Self.FK_TeamMembers_Users">

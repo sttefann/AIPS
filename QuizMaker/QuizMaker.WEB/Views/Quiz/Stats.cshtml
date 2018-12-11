@@ -1,0 +1,232 @@
+﻿@model QuizMaker.Models.Item.ItemModel
+
+@*@model QuizMaker.Models.StatisticsModel.Stats*@
+@*<script src="~/Scripts/MyScripts/CreateQuestion/question-model.strategy.js"></script>
+    <script src="~/Scripts/MyScripts/CreateQuestion/stats.functions.js"></script>
+    <div id="stats">
+        <script>
+            var question = new QuestionModel();
+        </script>
+
+        @if (Model.TestStats.Count > 0)
+        {
+            <script>
+            question.setStrategy("test");
+            var arr = JSON.parse('@Html.Raw(Json.Encode(@Model.TestStats))');
+
+            question.DisplayStats(arr);
+            </script>
+        }
+        else if (Model.SurveyStats.Count() > 0)
+        {
+            <div class="row-fluid" id="wizard-div">
+                <div class="span12">
+                    <div class="widget-box">
+                        <div class="widget-header widget-header-blue widget-header-flat">
+                            <h4 class="lighter">@Model.Name</h4>
+                        </div>
+
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                <div id="fuelux-wizard" class="row-fluid" data-target="#step-container">
+                                    <ul class="wizard-steps">
+                                        <li data-target="#step0" class="">
+                                            <span class="step">0</span>
+                                        </li>
+                                        @for (int i = 0; i < Model.SurveyStats.Count(); i++)
+                                        {
+                                            int id = i + 1;
+                                            string ajdi = "#step" + id;
+                                            <li data-target="@ajdi" class="">
+                                                <span class="step">@i</span>
+                                            </li>
+                                        }
+
+
+                                    </ul>
+                                </div>
+
+                                <hr>
+                                <div class="step-content row-fluid position-relative" id="step-container">
+                                    <div class="step-pane active" id="step0">
+                                        <div class="center">
+                                            <h4 class="lighter block green">
+                                                Survey statistics
+                                            </h4>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <hr>
+                                <div class="row-fluid wizard-actions">
+                                    <button class="btn btn-prev" disabled="disabled">
+                                        <i class="icon-arrow-left"></i>
+                                        Prev
+                                    </button>
+
+                                    <button class="btn btn-inverse no-border btn-next" data-last="Finish ">
+                                        Next
+                                        <i class="icon-arrow-right icon-on-right"></i>
+                                    </button>
+                                </div>
+                            </div><!-- /widget-main -->
+                        </div><!-- /widget-body -->
+                    </div>
+                </div>
+            </div>
+            <script>
+                question.setStrategy("survey");
+                var arr = JSON.parse('@Html.Raw(Json.Encode(@Model.SurveyStats))');
+                console.log(arr);
+                question.DisplayStats(arr);
+            </script>
+        }
+        else if (Model.PollStats.Count() > 0)
+        {
+            <div class="col-sm-6 col-sm-offset-3">
+                <div class="widget-box">
+                    <div class="widget-header header-color-dark">
+                        <h5 class="bigger lighter" id="results_header">@Html.DisplayFor(model => Model.Name)</h5>
+                    </div>
+                    <div class="widget-body">
+                        <div class="widget-main">
+
+                            <ul class="list-unstyled spaced2" id="results"></ul>
+                            <div>
+                                <i> &nbsp; </i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                question.setStrategy("poll");
+                 var arr = JSON.parse('@Html.Raw(Json.Encode(@Model.PollStats))');
+                question.DisplayStats(arr);
+            </script>
+        }
+        else
+        {
+            <script>
+                question.setStrategy("null");
+                question.DisplayStats([]);
+            </script>
+        }
+    </div>*@
+<div id="stats">
+    <!-- poll and test container -->
+    <div class="col-sm-6 col-sm-offset-3 hide" id="stats_container">
+        <div class="widget-box">
+            <div class="widget-header header-color-dark">
+                <h5 class="bigger lighter" id="results_header"></h5>
+            </div>
+            <div class="widget-body">
+                <div class="widget-main" id="wmain">
+
+                    <ul class="list-unstyled spaced2" id="results"></ul>
+                    <div>
+                        <i> &nbsp; </i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- survey container-->
+    <div class="row-fluid hide" id="wizard-div">
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-header widget-header-blue widget-header-flat">
+                    <h4 class="lighter" id="stats_name"> </h4>
+                </div>
+
+                <div class="widget-body">
+                    <div class="widget-main">
+                        <div id="fuelux-wizard" class="row-fluid" data-target="#step-container">
+                            <ul class="wizard-steps" id="wizard_steps">
+                                <li data-target="#step0" class="">
+                                    <span class="step">0</span>
+                                </li>
+                                @*for (int i = 0; i < Model.SurveyStats.Count(); i++)
+                                    {
+                                        int id = i + 1;
+                                        string ajdi = "#step" + id;
+                                        <li data-target="@ajdi" class="">
+                                            <span class="step">@i</span>
+                                        </li>
+                                    }*@
+
+
+                            </ul>
+                        </div>
+
+                        <hr>
+                        <div class="step-content row-fluid position-relative" id="step-container">
+                            <div class="step-pane active" id="step0">
+                                <div class="center">
+                                    <h4 class="lighter block green">
+                                        Survey statistics
+                                    </h4>
+                                </div>
+                            </div>
+
+                        </div>
+                        <hr>
+                        <div class="row-fluid wizard-actions">
+                            <button class="btn btn-prev" disabled="disabled">
+                                <i class="icon-arrow-left"></i>
+                                Prev
+                            </button>
+
+                            <button class="btn btn-inverse no-border btn-next" data-last="Finish ">
+                                Next
+                                <i class="icon-arrow-right icon-on-right"></i>
+                            </button>
+                        </div>
+                    </div><!-- /widget-main -->
+                </div><!-- /widget-body -->
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+@section Scripts {
+    <script src="~/Content/assets/js/fuelux/fuelux.wizard.min.js"></script>
+    <script src="~/Content/assets/js/jquery.validate.min.js"></script>
+    <script src="~/Content/assets/js/additional-methods.min.js"></script>
+    <script src="~/Content/assets/js/bootbox.min.js"></script>
+    <script src="~/Content/assets/js/jquery.maskedinput.min.js"></script>
+    <script src="~/Content/assets/js/select2.min.js"></script>
+    <script src="~/Scripts/MyScripts/CreateQuestion/question-model.strategy.js"></script>
+    <script src="~/Scripts/MyScripts/CreateQuestion/stats.functions.js"></script>
+    <script type="text/javascript">
+        jQuery(function ($) {
+            //$('[data-rel=tooltip]').tooltip();
+            //$(".select2").css('width', '200px').select2({ allowClear: true })
+            //    .on('change', function () {
+            //        $(this).closest('form').validate().element($(this));
+            //    });
+
+
+            //var $validation = true;
+            //$('#fuelux-wizard').ace_wizard().on('change', function (e, info) {
+            //}).on('finished', function (e) {
+
+            //}).on('stepclick', function (e) {
+            //    //return false;//prevent clicking on steps
+            //});
+
+            var question = new QuestionModel();
+            question.setStrategy("@Model.Value");
+            question.GetStats(@Model.Id);
+        });
+    </script>
+    <script type="text/javascript">
+
+    </script>
+}
+

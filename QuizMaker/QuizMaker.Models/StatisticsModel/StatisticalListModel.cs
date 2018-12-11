@@ -11,12 +11,11 @@ namespace QuizMaker.Models.StatisticsModel
     {
         public long Id { get; set; }
         public long Quiz_Id { get; set; }
-        public AspNetUser User { get; set; }
+        public long User_Id { get; set; }
         public int Points { get; set; }
-        public bool Vote { get; set; }
         public StatisticalListModel()
         {
-            User = new AspNetUser();
+            Points = 0;
         }
     }
 }

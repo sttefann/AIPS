@@ -14,11 +14,22 @@ namespace QuizMaker.DAL.DB
     
     public partial class PossibleAnswer
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public PossibleAnswer()
+        {
+            this.CorrectAnswers = new HashSet<CorrectAnswer>();
+            this.Statistics = new HashSet<Statistic>();
+        }
+    
         public long Id { get; set; }
         public string text { get; set; }
         public long Question_Id { get; set; }
         public Nullable<int> Answer_number { get; set; }
     
         public virtual Question Question { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CorrectAnswer> CorrectAnswers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Statistic> Statistics { get; set; }
     }
 }

@@ -16,7 +16,6 @@ namespace QuizMaker.DAL.DB
     {
         public string LoginProvider { get; set; }
         public string ProviderKey { get; set; }
-        public string ProviderDisplayName { get; set; }
         public long UserId { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }

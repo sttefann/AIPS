@@ -11,34 +11,32 @@ namespace QuizMaker.Repository
     public class UoW : IUow
     {
         private readonly QuizMakerEntities _entity;
-        public UoW(QuizMakerEntities entity)
+        public UoW(IQuizMakerEntities entity)
         {
             _entity = entity as QuizMakerEntities;
 
             Categories = new CategoryRepository(_entity);
 
-            PossibleAnswers = new PossibleAnswerRepository(entity);
+            PossibleAnswers = new PossibleAnswerRepository(_entity);
+            CorrectAnswers = new CorrectAnswerRepository(_entity);
 
-            Questions = new QuestionRepository(entity);
+            Questions = new QuestionRepository(_entity);
 
-            StatisticalLists = new StatisticalListRepository(entity);
+            Quizzes = new QuizRepository(_entity);
 
-            SurveyStatistics = new SurveyStatisticRepository(entity);
+            Statistics = new StatisticsRepository(_entity);
 
-            TeamMembers = new TeamMemberRepository(entity);
-
-            Teams = new TeamRepository(entity);
+            TeamMembers = new TeamMemberRepository(_entity);
 
         }
 
         public ICategoryRepository Categories { get; set; }
         public IPossibleAnswerRepository PossibleAnswers { get; set; }
+        public ICorrectAnswerRepository CorrectAnswers { get; set; }
         public IQuestionRepository Questions { get; set; }
         public IQuizRepository Quizzes { get; set; }
-        public IStatisticalListRepository StatisticalLists { get; set; }
-        public ISurveyStatisticRepository SurveyStatistics { get; set; }
+        public IStatisticsRepository Statistics { get; set; }
         public ITeamMemberRepository TeamMembers { get; set; }
-        public ITeamRepository Teams { get; set; }
 
         public int Complete()
         {

@@ -1,4 +1,5 @@
 ﻿
+using QuizMaker.DAL.DB;
 using QuizMaker.Models.CategoryModel;
 using QuizMaker.Models.QuizModels;
 using System;
@@ -11,10 +12,12 @@ namespace QuizMaker.Interfaces.BL
 {
     public interface ICategoryManager
     {
+        GroupCategory GetAllCategories();
         List<CategoryModel> GetMainCategories();
-        List<CategoryModel> GetSubCategories(long id);
+        List<ICategory> GetSubCategories(long id, GroupCategory parent);
         List<QuizModel> GetQuizzesFromCategory(long category_id);
-        CategoryModel GetCategory(long id);
+        Category GetCategory(long id);
+        LeafCategory GetLeaf(long id);
         long NewCategory(CategoryModel category);
         bool UpdateCategory(CategoryModel category);
         bool DeleteCategory(long id);

@@ -13,5 +13,16 @@ namespace QuizMaker.Repository
         public CategoryRepository(QuizMakerEntities context) : base(context as QuizMakerEntities)
         {
         }
+        public ICollection<Category> GetLeafCategories()
+        {
+            try
+            {
+                return Context.Set<Category>().Where(x => x.Partible == 0).ToList();
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
     }
 }

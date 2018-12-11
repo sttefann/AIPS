@@ -1,0 +1,238 @@
+﻿@model List<QuizMaker.Models.QuizModels.QuizzCategoryModel>
+<div class="col-sm-12">
+    <h3 class="header smaller">Create Quiz</h3>
+    <div class="row">
+        <div class="col-xs-4 col-sm-3">
+        </div>
+        <div class="col-xs-8 col-sm-9 pricing-span-body">
+            <div class="pricing-span">
+                <div class="widget-box pricing-box-small">
+                    <div class="widget-header header-color-blue2 quiz-box">
+                        <h5 class="bigger lighter">Test</h5>
+                    </div>
+
+                    <div class="widget-body">
+                        <div class="widget-main no-padding">
+                            <ul class="list-unstyled list-striped pricing-table">
+                                <li>Custom question texts</li>
+                                <li> Multiple answers </li>
+                                <li> User inputs </li>
+                                <li> Points </li>
+                            </ul>
+
+                            <div class="center">
+
+                                <span>
+                                    <i class="glyphicon glyphicon-cog bigger-300"></i>
+                                    @*<img src="~/Content/assets/img/test-grade-png-black-and-white-chart-exam-grade-mark-result-results-test-icon-512.png" />*@
+                                </span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <a href="/Quiz/Create" class="btn btn-block btn-sm btn-grey">
+                                <span>Create</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pricing-span">
+                <div class="widget-box pricing-box-small">
+                    <div class="widget-header header-color-green quiz-box">
+                        <h5 class="bigger lighter">Survey</h5>
+                    </div>
+
+                    <div class="widget-body">
+                        <div class="widget-main no-padding">
+                            <ul class="list-unstyled list-striped pricing-table">
+                                <li> Multiple possible answers </li>
+                                <li> Custom user input </li>
+                                <li> Statistics </li>
+                                <li> &nbsp;</li>
+                            </ul>
+
+                            <div class="center">
+                                <i class="glyphicon glyphicon-edit bigger-300">
+                                    @*<img src="~/Content/assets/img/checklist-512.png" />*@
+                                </i>
+                            </div>
+                        </div>
+
+                        <div>
+                            <a href="/Quiz/Create" class="btn btn-block btn-sm btn-grey">
+                                <span>Create</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pricing-span">
+                <div class="widget-box pricing-box-small">
+                    <div class="widget-header header-color-grey quiz-box">
+                        <h5 class="bigger lighter">Poll</h5>
+                    </div>
+
+                    <div class="widget-body">
+                        <div class="widget-main no-padding">
+                            <ul class="list-unstyled list-striped pricing-table">
+                                <li> Multiple possible answers </li>
+                                <li> One question by poll </li>
+                                <li> Results </li>
+
+                                <li>
+                                    &nbsp;
+                                </li>
+                            </ul>
+
+                            <div class="center">
+                                <i class="glyphicon glyphicon-stats bigger-300">
+
+                                    @*<img src="~/Content/assets/img/graph-clipart-poll-6.png" />*@
+                                </i>
+                            </div>
+                        </div>
+
+                        <div>
+                            <a href="/Quiz/Create" class="btn btn-block btn-sm btn-grey">
+                                <span>Create</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h3 class="header smaller">Your Quizzes</h3>
+    <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-10 col-xs-12" id="quiz_box">
+
+            @foreach (var Element in Model)
+            {
+                <div class="col-sm-2 " style="height: 140px;">
+                    <div class="col-sm-1">
+                        <a class="pull-right btn button5 btn-minier" href="/Quiz/Stats/@Element.Id">
+                            <i class="glyphicon-list glyphicon"></i>
+                        </a>
+                        <br />
+                        <br />
+                        <a class="pull-right btn button5 btn-minier" onclick="DeleteFunctionn(@Element.Id);return false;" >
+                            <i class="glyphicon glyphicon-trash"></i>
+                        </a>
+                    </div>
+
+                    <a class="btn btn-app btn-light btn-xs radius-4" href="/Question/Create/@Element.Id">
+                        @if (Element.Type == "test")
+                        {
+                            <i class="icon-cog bigger-160"></i>
+                            <i>Test</i>
+                        }
+                        else if (Element.Type == "survey")
+                        {
+                            <i class="icon-edit bigger-160"></i>
+                            <i> Survey</i>
+                        }
+                        else if (Element.Type == "poll")
+                        {
+                            <i class="glyphicon glyphicon-stats bigger-160"></i>
+                            <i>Poll</i>
+                        }
+
+
+
+                        <span class="badge badge-transparent">
+
+                        </span>
+                    </a>
+                    <div class="col-sm-10 col-sm-offset-2">
+                        <label class="center">
+                            @Html.DisplayFor(element => Element.Name)
+                        </label>
+                    </div>
+
+                    <hr />
+                </div>
+            }
+
+
+
+        </div>
+    </div>
+</div>
+<div>
+    <div id="dialog-confirm" class="hide">
+        <p class="bigger-110 bolder center grey">
+            Are you sure?
+        </p>
+    </div><!-- #dialog-confirm -->
+
+</div>
+@section Scripts {
+    <script src="~/Content/assets/js/jquery-ui-1.10.3.custom.min.js"></script>
+    <script src="~/Content/assets/js/jquery-ui-1.10.3.full.min.js"></script>
+    <script src="~/Content/assets/js/bootbox.min.js"></script>
+    <script type="text/javascript">
+        jQuery(function ($) {
+            @if (ViewBag.success == -1)
+            {
+                <text>
+            Failed("Something went wrong. Please try again later!");
+
+            </text>
+
+            }
+            else if (ViewBag.success == 1)
+            {
+                <text>
+            Success("Quiz deleted successfully!");
+            </text>
+            }
+          
+        });
+    </script>
+
+    <script type="text/javascript">
+        function DeleteFunctionn(id) {
+            var url = '/Quiz/Delete/' + id;
+            //override dialog's title function to allow for HTML titles
+            $.widget("ui.dialog", $.extend({}, $.ui.dialog.prototype, {
+                _title: function (title) {
+                    var $title = this.options.title || '&nbsp;'
+                    if (("title_html" in this.options) && this.options.title_html == true)
+                        title.html($title);
+                    else title.text($title);
+                }
+            }));
+
+            // var success = Request.Url.Segments.Last();
+
+            $("#dialog-confirm").removeClass('hide').dialog({
+                resizable: false,
+                modal: true,
+                title: "<div class='widget-header'><h4 class='smaller'>Delete this question</h4></div>",
+                title_html: true,
+                buttons: [
+                    {
+                        html: "<i class='icon-trash bigger-110'></i>&nbsp; Delete",
+                        "class": "btn btn-danger btn-xs",
+                        click: function () {
+                            window.location.pathname = url;
+                            $(this).dialog("close");
+                        }
+                    }
+                    ,
+                    {
+                        html: "<i class='icon-remove bigger-110'></i>&nbsp; Cancel",
+                        "class": "btn btn-xs",
+                        click: function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                ]
+            });
+        }
+    </script>
+}

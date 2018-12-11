@@ -2,9 +2,11 @@
 using QuizMaker.Interfaces.BL;
 using QuizMaker.Interfaces.Repository;
 using QuizMaker.Models.CategoryModel;
+using QuizMaker.Models.Enums;
 using QuizMaker.Models.QuizModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,26 +33,50 @@ namespace QuizMaker.BL.Managers
             }
             catch(Exception e)
             {
+                //Log exception
+                var exception = e;
+                Debug.Write(exception.Message);
+                Debug.Write(e.Message);
                 return false;
             }
            
         }
 
-        public CategoryModel GetCategory(long id)
+        public GroupCategory GetAllCategories()
+        {
+            try
+            {
+                GroupCategory root = new GroupCategory();
+                root.SetName("root");
+                root.SetId(0);
+                root.AddSubCategories(GetSubCategories(0, root));
+
+                return root;
+            }
+            catch(Exception ex)
+            {
+                //Log exception
+                var exception = ex;
+                Debug.Write(exception.Message);
+                Debug.Write(ex.Message);
+
+                return null;
+            }
+        }
+        public Category GetCategory(long id)
         {
             try
             {
                 Category category = _uow.Categories.Get(id);
-                CategoryModel model = new CategoryModel();
-
-                model.id = category.id;
-                model.Name = category.Name;
-                model.Parent_id = category.Parent_id;
-                model.Partible = (category.Partible == 1) ? true : false;
-                return model;
+                return category;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
+                //Log exception
+                var exception = e;
+                Debug.Write(exception.Message);
+                Debug.Write(e.Message);
+
                 return null;
             }
         }
@@ -77,10 +103,51 @@ namespace QuizMaker.BL.Managers
             }
             catch (Exception e)
             {
+                //Log exception
+                var exception = e.InnerException;
+             //   Debug.Write(exception.Message);
+                Debug.Write(e.Message);
+
                 return null;
             }
         }
+        public LeafCategory GetLeaf(long id)
+        {
+            try
+            {
+                LeafCategory model = new LeafCategory();
+                Category category = _uow.Categories.Get(id);
+                if (category != null)
+                {
+                    model.SetId(category.id);
+                    model.SetName(category.Name);
+                    model.SetParent(category.Parent_id);
 
+                    foreach (Quiz quiz in category.Quizzes)
+                    {
+                        if(quiz.Questions.Count() > 0)
+                        {
+                            QuizzCategoryModel quizModel = new QuizzCategoryModel();
+                            quizModel.Id = quiz.Id;
+                            quizModel.Name = quiz.Name;
+                            quizModel.Type = quiz.Type.ToQuizType().ConvertToString();
+                            model.AddQuizz(quizModel);
+                        }
+                        
+                    }
+                }
+                return model;
+            }
+            catch (Exception e)
+            {
+                //Log exception
+                var exception = e;
+                //    Debug.Write(exception.Message);
+                Debug.Write(e.Message);
+
+                return null;
+            }
+        }
         public List<QuizModel> GetQuizzesFromCategory(long category_id)
         {
             try
@@ -102,7 +169,6 @@ namespace QuizMaker.BL.Managers
                         questions.Add(question);
                     }
                     model.Questions = questions;
-                    model.Team = _uow.Teams.GetAll().First(x => x.id == quiz.Team_Id);
 
                     models.Add(model);
                 }
@@ -111,32 +177,64 @@ namespace QuizMaker.BL.Managers
             }
             catch (Exception e)
             {
+                //Log exception
+                var exception = e;
+            //    Debug.Write(exception.Message);
+                Debug.Write(e.Message);
+
                 return null; 
             }
         }
 
-        public List<CategoryModel> GetSubCategories(long id)
+        public List<ICategory> GetSubCategories(long id, GroupCategory parent)
         {
             try
             {
                 List<Category> categories = _uow.Categories.GetAll().Where(x => x.Parent_id == id).ToList();
-                List<CategoryModel> models = new List<CategoryModel>();
+                List<ICategory> models = new List<ICategory>();
                 foreach (Category category in categories)
                 {
-                    CategoryModel model = new CategoryModel();
-                    model.id = category.id;
-                    model.Name = category.Name;
-                    model.Parent_id = category.Parent_id;
-                    model.Partible = (category.Partible == 1) ? true : false;
-                    model.Quizzes = category.Quizzes.ToList();
+                    
+                    if(category.Partible == 1)
+                    {
+                        GroupCategory model = new GroupCategory();
+                        model.SetName(category.Name);
+                        model.SetId(category.id);
+                        model.SetParent(category.Parent_id);
+                        model.SetParentNode(parent);
+                        model.AddSubCategories(GetSubCategories(category.id, model));
 
-                    models.Add(model);
+                        models.Add(model);
+                    }
+                    else
+                    {
+                        LeafCategory model = new LeafCategory();
+                        model.SetId(category.id);
+                        model.SetName(category.Name);
+                        model.SetParent(category.Parent_id);
+                        model.SetParentNode(parent);
+                        foreach (Quiz quiz in category.Quizzes)
+                        {
+                            QuizzCategoryModel quizModel = new QuizzCategoryModel();
+                            quizModel.Id = quiz.Id;
+                            quizModel.Name = quiz.Name;
+                            quizModel.Type = quiz.Type.ToQuizType().ConvertToString();
+                            model.AddQuizz(quizModel);
+                        }
+
+                        models.Add(model);
+                    }
                 }
 
                 return models;
             }
             catch (Exception e)
             {
+                //Log exception
+                var exception = e;
+                Debug.Write(exception.Message);
+                Debug.Write(e.Message);
+
                 return null;
             }
         }
@@ -158,6 +256,11 @@ namespace QuizMaker.BL.Managers
             }
             catch (Exception e)
             {
+                //Log exception
+                var exception = e.InnerException;
+                Debug.Write(exception.Message);
+                Debug.Write(e.Message);
+
                 return -1;
             }
         }
@@ -172,12 +275,17 @@ namespace QuizMaker.BL.Managers
                 newcategory.Parent_id = category.Parent_id;
                 newcategory.Partible = category.Partible? (byte)1 : (byte)0;
                 newcategory.Quizzes = category.Quizzes;
-
+                
                 _uow.Complete();
                 return true;
             }
             catch (Exception e)
             {
+                //Log exception
+                var exception = e;
+                Debug.Write(exception.Message);
+                Debug.Write(e.Message);
+
                 return false;
             }
         }

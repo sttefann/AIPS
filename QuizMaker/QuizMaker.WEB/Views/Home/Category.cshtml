@@ -1,0 +1,76 @@
+﻿@model QuizMaker.Models.CategoryModel.GroupCategory
+@{
+    /**/
+
+    ViewBag.Title = "Category";
+}
+
+<h3 class="header smaller">
+    Categories
+</h3>
+
+<div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+        @Html.Raw(Model.Show())
+    </div>
+    <div class="col-sm-6" id="category_box">
+
+    </div>
+</div>
+<h3 class="header smaller">
+    @ViewBag.Category
+</h3>
+
+<div class="row">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-10 col-xs-12" id="quiz_container">
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/Content/assets/js/jquery.nestable.min.js"></script>
+    <script src="~/Scripts/MyScripts/CreateQuestion/category.functions.js"></script>
+    <script src="~/Scripts/MyScripts/CreateQuestion/question-model.strategy.js"></script>
+    <script type="text/javascript">
+                jQuery(function ($) {
+
+                    $("#addBtn").click(function () {
+                    });
+
+                    if ("@ViewBag.Quiz" != "[]") {
+                         var arr_from_json = @Html.Raw(ViewBag.Quiz);
+            console.log(arr_from_json);
+                    show(arr_from_json);
+
+                    }
+                    @*var arr = JSON.parse('@Html.Raw(Json.Encode(@Model))');
+                    console.log(arr);*@
+           // $('.dd').nestable();
+
+            $('.dd-handle a').on('mousedown', function (e) {
+                e.stopPropagation();
+            });
+            $('.dd a').on('mousedown', function (event) { event.preventDefault(); return false; });
+            $('[data-rel="tooltip"]').tooltip();
+
+        });
+    </script>
+    <script type="text/javascript">
+        function show(list) {
+            var question = new QuestionModel();
+           // console.log(list);
+            if (list === "") {
+
+            } else {
+                for (var i = 0; i < list.length; i++) {
+                    //console.log(list[i].Name + ":" + list[i].Id + ";" + list[i].Type);
+                    question.setStrategy(list[i].Type);
+                    question.DisplayViewModel(list[i].Name, list[i].Id);
+                }
+            }
+        }
+    </script>
+
+
+}

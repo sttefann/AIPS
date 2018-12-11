@@ -18,24 +18,24 @@ namespace QuizMaker.DAL.DB
         public Quiz()
         {
             this.Questions = new HashSet<Question>();
-            this.SurveyStatistics = new HashSet<SurveyStatistic>();
-            this.StatisticalLists = new HashSet<StatisticalList>();
+            this.Statistics = new HashSet<Statistic>();
+            this.TeamMembers = new HashSet<TeamMember>();
         }
     
         public long Id { get; set; }
         public string Name { get; set; }
         public long Owners_Id { get; set; }
-        public Nullable<long> Team_Id { get; set; }
         public Nullable<long> Category_Id { get; set; }
+        public int Type { get; set; }
+        public Nullable<bool> ReadOnly { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Question> Questions { get; set; }
-        public virtual Team Team { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SurveyStatistic> SurveyStatistics { get; set; }
+        public virtual ICollection<Statistic> Statistics { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StatisticalList> StatisticalLists { get; set; }
+        public virtual ICollection<TeamMember> TeamMembers { get; set; }
     }
 }

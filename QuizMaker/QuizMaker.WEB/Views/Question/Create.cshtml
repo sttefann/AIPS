@@ -1,0 +1,291 @@
+﻿@model QuizMaker.Models.QuizModels.QQModel
+<div class="x_panel" style="margin-top: 15px;">
+    <div id="error_panel">
+    </div>
+
+    <div class="row" id="quiz_edit">
+        <div class="col-sm-12 col-xs-12 col-lg-12">
+            <div class="x_title">
+                <h2 class="header smaller">Edit Quiz</h2>
+            </div>
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => Model.Quiz.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-sm-6 col-xs-12">
+                            @Html.EditorFor(model => model.Quiz.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Quiz.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Quiz.Category_Id, htmlAttributes: new { @class = "control-label col-md-2 col-sm-3" })
+                        <div class="col-sm-6 col-xs-12">
+                            @Html.DropDownListFor(model => model.Quiz.Category_Id, Model.Quiz.Categories.Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Value }), "", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Quiz.Category_Id, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input id="btnEditQuiz" value="Save" class="btn btn-inverse no-border" />
+                        </div>
+                       
+                    </div>
+                </div>
+
+
+            
+        </div>
+    </div>
+    <hr />
+
+    <div class="x_title">
+        <h2 class="header smaller">@ViewBag.quizname</h2>
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+        <div class="form-horizontal" role="form" id="box">
+            <div id="forma">
+            </div>
+            <div class="space-4"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-1">
+
+            </div>
+            <div class="widget-box light-border col-sm-10 col-xs-12" style="opacity: 1;">
+                <div class="widget-header header-color-dark">
+                    <h5 class="smaller">Question list</h5>
+
+                    @*<div class="widget-toolbar">
+                            <span class="badge badge-inverse">@ViewBag.num</span>
+                        </div>*@
+                </div>
+
+                <div class="widget-body">
+                    <div class="widget-main padding-6">
+
+                        @if (Model != null)
+                        {
+                            @*<div class="col-md-4">*@
+                            <div id="question-list">
+                                @{
+                                    int counter = 1;
+                                }
+                                @foreach (var Element in Model.Questions)
+                                {
+                                    <hr />
+                                    <div class="clearfix form-actions" id="@Element.Id">
+                                        <p>
+                                            @*<i class="badge badge-grey" style="font-size: 16px">  <b> @counter </b> </i>*@
+                                            @{ counter++;
+                                            }
+                                            <i class="pull-right">
+                                                @if (Element.ReadOnly)
+                                                {
+                                                    <button class="btn btn-danger btn-sm  no-border" href="#" id="id-btn-dialog" onclick="DeleteFunctionn(@Element.Id);return false;" disabled>
+                                                        <i class="icon-trash icon-only bigger-130"></i>
+                                                    </button>
+
+                                                    <button class="btn btn-primary btn-sm no-border" href="#" id="id-btn-edit" onclick="EditFunctionn(@Element.Id);return false;" disabled>
+                                                        <i class="icon-edit icon-only bigger-130"></i>
+                                                    </button>
+                                                }
+                                                else
+                                                {
+                                                    <button class="btn btn-danger btn-sm  no-border" href="#" id="id-btn-dialog" onclick="DeleteFunctionn(@Element.Id);return false;">
+                                                        <i class="icon-trash icon-only bigger-130"></i>
+                                                    </button>
+
+                                                    <button class="btn btn-primary btn-sm no-border" href="#" id="id-btn-edit" onclick="EditFunctionn(@Element.Id);return false;">
+                                                        <i class="icon-edit icon-only bigger-130"></i>
+                                                    </button>
+                                                }
+                                            </i>
+
+                                        </p>
+
+                                        <dl class="dl-horizontal">
+
+                                            <dt>
+                                                @Html.DisplayNameFor(element => Element.Question_text):
+                                            </dt>
+
+                                            <dd>
+                                                @Html.DisplayFor(element => Element.Question_text)
+                                            </dd>
+                                            @if (@ViewBag.type == "test")
+                                            {
+                                                <dt>
+                                                    @Html.DisplayNameFor(element => Element.Points) :
+                                                </dt>
+
+                                                <dd>
+                                                    @Html.DisplayFor(element => Element.Points)
+                                                </dd>
+                                            }
+                                            <dt>
+                                                @Html.DisplayNameFor(element => Element.Answers) :
+                                            </dt>
+                                            @if (Element.Answers.Count() == 0)
+                                            {
+                                                <dd> <ins><i> &nbsp; &nbsp; &nbsp;  User input &nbsp; &nbsp; &nbsp;</i></ins> </dd>
+                                            }
+                                            else if (Element.Answers.Count() == 1)
+                                            {
+                                                <dd> <ins> &nbsp; &nbsp; &nbsp;  @Element.Answers.FirstOrDefault().Text &nbsp; &nbsp; &nbsp;</ins> </dd>
+                                            }
+                                            else
+                                            {
+                                                <br />
+                                                foreach (var item in Element.Answers)
+                                                {
+                                                    if (item.IsCorrect)
+                                                    {
+                                                        <dd>
+                                                            <i class="icon-check"></i> &nbsp; @Html.DisplayFor(model => item.Text)
+                                                        </dd>
+                                                    }
+                                                    else
+                                                    {
+                                                        <dd>
+                                                            <i class="icon-check-empty"> </i> &nbsp;  @Html.DisplayFor(model => item.Text)
+                                                        </dd>
+                                                    }
+                                                }
+                                            }
+                                        </dl>
+                                    </div>
+                                }
+
+                            </div>
+                            @*</div>*@
+                            <input type="hidden" id="Value_quiz_id" name="QuizId" value="@ViewBag.QuizId">
+                            <input type="hidden" id="Value_question_num" name="QuestionNum" value="@counter">
+                            <input type="hidden" id="Value_question_id" name="QuestionID" value="">
+                            <input type="hidden" id="Value_readonly" name="readonly" value="">
+                            <input type="hidden" id="Value_quiz_type" name="QuizType" value="@ViewBag.type">
+                        }
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+</div>
+<div>
+    <div id="dialog-confirm" class="hide">
+        <p class="bigger-110 bolder center grey">
+            Are you sure?
+        </p>
+    </div><!-- #dialog-confirm -->
+
+</div>
+
+@section Scripts {
+    <script src="~/Content/assets/js/jquery.autosize.min.js"></script>
+    <script src="~/Content/assets/js/jquery-ui-1.10.3.custom.min.js"></script>
+    <script src="~/Content/assets/js/jquery-ui-1.10.3.full.min.js"></script>
+    <script src="~/Content/assets/js/fuelux/fuelux.spinner.min.js"></script>
+    <script src="~/Content/assets/js/jquery.inputlimiter.1.3.1.min.js"></script>
+
+    <script src="~/Scripts/MyScripts/CreateQuestion/create-question.functions.js"></script>
+    <script src="~/Scripts/MyScripts/CreateQuestion/question-model.strategy.js"></script>
+    <script src="~/Scripts/MyScripts/CreateQuestion/create-question.main.js"></script>
+    <script src="~/Scripts/MyScripts/CreateQuestion/edit-question.functions.js"></script>
+    <script type="text/javascript">
+        jQuery(function ($) {
+            @if (ViewBag.success == -1)
+            {
+                <text>
+            Failed("Something went wrong. Please try again later!");
+
+            </text>
+
+            }
+            else if (ViewBag.success == 1)
+            {
+                <text>
+            Success("Successfully added new question!");
+            </text>
+            } else if (ViewBag.success == 2)
+            {
+                <text>
+            Success("New Quiz successfuly created!");
+            </text>
+            } else if (ViewBag.success == 3)
+            {
+                <text>
+            Success("Question successfuly deleted!");
+            </text>
+             }else if(ViewBag.success == -3)
+            {
+                <text>
+            Failed("Something went wrong. Question your trying to delete is'nt deleted, try again later!");
+            </text>
+            }
+
+            question.setStrategy("@ViewBag.type");
+
+            @if(Model != null && !ViewBag.finished)
+            {
+         <text>
+                    run("@ViewBag.type");
+                    $('textarea').autosize({ append: "\n" });
+            </text>
+            }
+
+            });
+
+    </script>
+    <script type="text/javascript">
+        function EditFunctionn(id) {
+            question.Edit(id, false);
+        }
+        function DeleteFunctionn(id) {
+            var url = '/Question/Delete/' + id;
+            //override dialog's title function to allow for HTML titles
+            $.widget("ui.dialog", $.extend({}, $.ui.dialog.prototype, {
+                _title: function (title) {
+                    var $title = this.options.title || '&nbsp;'
+                    if (("title_html" in this.options) && this.options.title_html == true)
+                        title.html($title);
+                    else title.text($title);
+                }
+            }));
+
+            // var success = Request.Url.Segments.Last();
+
+            $("#dialog-confirm").removeClass('hide').dialog({
+                resizable: false,
+                modal: true,
+                title: "<div class='widget-header'><h4 class='smaller'>Delete this question</h4></div>",
+                title_html: true,
+                buttons: [
+                    {
+                        html: "<i class='icon-trash bigger-110'></i>&nbsp; Delete",
+                        "class": "btn btn-danger btn-xs",
+                        click: function () {
+                            window.location.pathname = url;
+                            //  showMessage();
+                            $(this).dialog("close");
+                        }
+                    }
+                    ,
+                    {
+                        html: "<i class='icon-remove bigger-110'></i>&nbsp; Cancel",
+                        "class": "btn btn-xs",
+                        click: function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                ]
+            });
+        }
+    </script>
+}
+

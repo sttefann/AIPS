@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Data.Entity;
+using Microsoft.Extensions.Configuration;
 
 namespace QuizMaker.DAL.DB
 {

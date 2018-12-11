@@ -1,0 +1,57 @@
+﻿@model QuizMaker.Models.Item.ItemModel
+
+<div class="col-sm-10 col-xs-12 col-sm-offset-1">
+    <div class="widget-box">
+        <div class="widget-header header-color-dark">
+            <h5 class="bigger lighter" id="results_header">Results</h5>
+        </div>
+
+        <div class="widget-body">
+            <div class="widget-main">
+                <ul class="list-unstyled spaced2" id="results"></ul>
+
+                <hr>
+                <div class="price center" id="points_div">
+
+                    <h2><small>points:</small> <i id="points"></i> </h2>
+                </div>
+                <div>
+                    <i> &nbsp; </i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script src="~/Scripts/MyScripts/CreateQuestion/question-model.strategy.js"></script>
+    <script src="~/Scripts/MyScripts/CreateQuestion/results.main.js"></script>
+
+    <script type="text/javascript">
+        jQuery(function ($) {
+            run("@Model.Value");
+            var model = {
+                Id: "@Model.Id",
+                Value: "@Model.Value"
+            };
+            question.GetResults(model);
+          /*  $.ajax({
+                url: '/Quiz/Result',
+                type: 'post',
+                dataType: 'json',
+                data: model,
+                success: function (response) {
+                    if (response.success) {
+                        question.DisplayResults(response.results, response.text);
+                    } else {
+                        Failed();
+                    }
+                    //
+                }
+            });
+            */
+        });
+    </script>
+
+}

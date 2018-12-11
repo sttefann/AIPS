@@ -1,0 +1,96 @@
+﻿@model QuizMaker.Models.QuizModels.QuizCreateModel
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>QuizCreateModel</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2 col-sm-3" })
+            <div class="col-sm-6 col-xs-12">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Team, htmlAttributes: new { @class = "control-label col-md-2 col-sm-3" })
+            <div class="col-sm-6 col-xs-12">
+                <span class="span5">
+                    <label class="inline">
+                        <input class="ace ace-switch ace-switch-5 check-box" data-val="true" data-val-required="The Is this quiz team project? field is required." id="Team" name="Team" type="checkbox" value="true">
+                        <span class="lbl"></span>
+                    </label>
+                </span>
+
+                <!--    @Html.EditorFor(model => model.Team, new { htmlAttributes = new { @class = "ace ace-switch ace-switch-5", @type = "checkbox" } })  -->
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Category_Id, htmlAttributes: new { @class = "control-label col-md-2 col-sm-3" })
+            <div class="col-sm-6 col-xs-12">
+                @Html.DropDownListFor(model => model.Category_Id, Model.Categories.Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Value }), "", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Category_Id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2 col-sm-3" })
+            <div class="col-sm-6 col-xs-12">
+                @Html.DropDownListFor(model => model.Type, Model.Types.Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Value }), "", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-xs-4">
+                <input type="submit" value="Create" class="btn btn-inverse" />
+            </div>
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+    <script>
+
+    </script>
+    <script type="text/javascript">
+        $("#Team").click(function () {
+            //alert($("#Team").is(":checked"));
+            var node;
+            var dropdown = document.getElementById("Type");
+            for (var i = 0; i < dropdown.childNodes.length; i++) {
+                console.log(dropdown.childNodes[i].value);
+                if (dropdown.childNodes[i].value == 3) {
+                    node = dropdown.childNodes[i];
+                        break;
+                    }
+            }
+            if (node != null) {
+                if ($("#Team").is(":checked")) {
+                    node.className = "hide";
+                } else {
+                    node.className = "show";
+                }
+            } else {
+                alert("null");
+            }
+
+        });
+        jQuery(function ($) {
+            @if(ViewBag.success == -1)
+            {
+         <text>
+            Failed("Something went wrong. Please try again later.");
+            </text>
+            }
+
+        });
+
+    </script>
+}

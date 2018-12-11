@@ -9,5 +9,6 @@ namespace QuizMaker.Interfaces.Repository
 {
     public interface ICategoryRepository : IRepository<Category>
     {
+        ICollection<Category> GetLeafCategories();
     }
 }

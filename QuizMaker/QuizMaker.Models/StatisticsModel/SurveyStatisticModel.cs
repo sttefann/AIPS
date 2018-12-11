@@ -11,12 +11,11 @@ namespace QuizMaker.Models.StatisticsModel
     {
         public long Id { get; set; }
         public long Quiz_Id { get; set; }
-        public AspNetUser User { get; set; }
+        public long UserID { get; set; }
         public long Question_Id { get; set; }
-        public Nullable<int> Answer_number { get; set; }
+        public long Answer_id { get; set; }
         public SurveyStatisticModel()
         {
-            User = new AspNetUser();
         }
     }
 }

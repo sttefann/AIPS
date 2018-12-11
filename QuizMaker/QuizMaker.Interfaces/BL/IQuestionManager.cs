@@ -10,11 +10,21 @@ namespace QuizMaker.Interfaces.BL
 {
     public interface IQuestionManager
     {
-        QuestionModel Get(long id);
-        List<QuestionModel> GetQuestionsForQuiz(long id);
+        QuestionM Get(long id);
+        long GetQuizId(long questionId);
+        bool ReadOnly(long id, bool readOnly);
+        List<QuestionViewModel> GetQuestionsForQuiz(long id);
+        List<QuestionPlayModel> GetQuestions(long id);
+        QuestionViewModel GetViewModel(long id);
         List<PossibleAnswer> GetPossibleAnswers(long questionId);
-        long Add(QuestionModel question);
-        bool Update(QuestionModel question);
+        long Add(QuestionCreateModel question);
+        bool Update(QuestionEditModel question);
         bool Delete(long id);
+        /// <summary>
+        /// Remove all questions from quiz
+        /// </summary>
+        /// <param name="quizId"></param>
+        /// <returns></returns>
+        bool DeleteAll(long quizId);
     }
 }

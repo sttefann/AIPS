@@ -1,0 +1,70 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    <li class="grey-2">
+        <a data-toggle="dropdown" class="dropdown-toggle grey-2" href="#">
+            <i class="icon-bell-alt" id="notify-bell"></i>
+        </a>
+        <ul class="pull-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close" id="notification">
+            <li class="dropdown-header">
+                <i class="icon-ok"></i>
+                Notifications
+            </li>
+
+        </ul>
+    </li>
+    <li>
+        <a data-toggle="dropdown" href="/Manage/Index" class="dropdown-toggle grey-2 ">
+            <img class="nav-user-photo" src="~/Content/assets/img/avatar2.png" alt="User's Photo">
+            <span class="user-info">
+                <small>Welcome,</small>
+                @User.Identity.GetUserName()
+            </span>
+
+            <i class="icon-caret-down"></i>
+
+        </a>
+        @*@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
+
+        <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+
+            @*<li>
+                    <a href="#">
+                        <i class="icon-cog"></i>
+                        Settings
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <i class="icon-user"></i>
+                        Profile
+                    </a>
+                </li>
+
+                <li class="divider"></li>*@
+
+            <li>
+                <div class="hide">
+                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "ace-nav" }))
+                    {
+                        @Html.AntiForgeryToken()
+                    }
+                </div>
+
+                <a href="javascript:document.getElementById('logoutForm').submit()">
+                    <i class="icon-off"></i>
+                    Logout
+                </a>
+
+            </li>
+
+        </ul>
+    </li>
+}
+else
+{
+
+    <li class="grey">@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+    <li class="grey">@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+}

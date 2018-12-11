@@ -1,0 +1,572 @@
+﻿@using QuizMaker.Models.QuestionModels
+@model QuizMaker.Models.QuizModels.QuizPlayModel
+<div class="row-fluid" id="wizard-div">
+    <div class="span12">
+        <div class="widget-box">
+            <div class="widget-header widget-header-blue widget-header-flat">
+                <h4 class="lighter">@Model.Name</h4>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main">
+                    <div id="fuelux-wizard" class="row-fluid" data-target="#step-container">
+                        <ul class="wizard-steps">
+                            <li data-target="#step0" class="active">
+                                <span class="step">0</span>
+                                <span class="title">Quiz info</span>
+                            </li>
+                            @for (int i = 0; i < Model.Questions.Count(); i++)
+                            {
+                                var Element = Model.Questions[i];
+                                string ajdi = "";
+                                if (i == Model.Questions.Count() - 1)
+                                {
+                                    ajdi = "#step_last";
+                                }
+                                else
+                                {
+                                    ajdi = "#step" + Element.Question_number;
+                                }
+                                <li data-target="@ajdi" class="">
+                                    <span class="step">@Element.Question_number</span>
+                                </li>
+                            }
+
+
+                        </ul>
+                    </div>
+
+                    <hr>
+                    <div class="step-content row-fluid position-relative" id="step-container">
+                        <div class="step-pane active" id="step0">
+                            <div class="center">
+                                <h4 class="lighter block green"> @Model.Name </h4>
+                                <hr />
+
+                                <div class="col-sm-6 col-sm-offset-3">
+                                    <dl class="dl-horizontal">
+
+                                        <dt>
+                                            @Html.DisplayNameFor(element => Model.Type):
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(element => Model.Type)
+                                        </dd>
+                                        <hr />
+                                        <dt>
+                                            Number of questions:
+                                        </dt>
+
+                                        <dd>
+                                            @Model.Questions.Count()
+                                        </dd>
+                                    </dl>
+                                </div>
+                               
+
+</div>
+                        </div>
+                        @for (int i = 0; i < Model.Questions.Count(); i++)
+                        {
+                            var Element = Model.Questions[i];
+                            string ajdi = "";
+                            if (i == Model.Questions.Count() - 1)
+                            {
+                                ajdi = "step_last";
+                            }
+                            else
+                            {
+                                ajdi = "step" + Element.Question_number;
+                            }
+                        <div class="step-pane question_step" id="@ajdi">
+                            <input type="hidden" value="@Element.Id" />
+                            <div class="center">
+                                <h4 class="blue lighter">@Element.Question_text</h4>
+                                <hr class="hr-double" />
+                            </div>
+                            @if (Element.PossibleAnswers.Count() == 0)
+                            {
+
+                                <label class="no-padding-right col-sm-3">Input:</label>
+                                <input type="text" id="answer_input" name="answer_input" class="col-sm-6 Value_box" />
+                            }
+                            else
+                            {
+                                if (Model.Type == "test")
+                                {
+                                    if (Element.CorrectAnswers.Count() == 1)
+                                    {
+                                        <label class="col-sm-3 col-xs-6"></label>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <div class="control-group Value_box">
+                                                @foreach (var item in Element.PossibleAnswers)
+                                                {
+                                                    <div class="radio">
+                                                        <label>
+                                                            <input name="@Element.Question_number" value="@item.Id" type="radio" class="ace">
+                                                            <span class="lbl col-sm-12 col-xs-12 list-group-item"> @item.Value </span>
+                                                        </label>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="form-group">
+                                            <label class="col-sm-3 col-xs-6"></label>
+                                            <ul class="checked-list-box list-group col-sm-6 col-xs-12 Value_box">
+                                                @foreach (var item in Element.PossibleAnswers)
+                                                {
+                                                    <li class="list-group-item col-sm-12 col-xs-12">
+                                                        <span class="Value_option" id="@item.Id">
+                                                            @item.Value
+                                                        </span>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    }
+
+                                }
+                                else
+                                {
+                                    if (Model.Type == "poll")
+                                    {
+                                        <label class="col-sm-3 col-xs-6"></label>
+                                        <div class="col-sm-6 col-xs-12">
+                                            <div class="control-group Value_box">
+                                                @foreach (var item in Element.PossibleAnswers)
+                                                {
+                                                    <div class="radio">
+                                                        <label>
+                                                            <input name="@Element.Question_number" value="@item.Id" type="radio" class="ace">
+                                                            <span class="lbl col-sm-12 col-xs-12 list-group-item"> @item.Value </span>
+                                                        </label>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="form-group">
+                                            <label class="col-sm-3 col-xs-6"></label>
+                                            <ul class="checked-list-box list-group col-sm-6 col-xs-12 Value_box">
+                                                @foreach (var item in Element.PossibleAnswers)
+                                                {
+                                                    <li class="list-group-item col-sm-12 col-xs-12">
+                                                        <span class="Value_option" id="@item.Id">
+                                                            @item.Value
+                                                        </span>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    }
+                                }
+                            }
+                        </div>
+                        }
+                    </div>
+                    <div class="alert alert-danger hide col-sm-8 col-sm-offset-2"  id="error" style="border-left-color: darkred; border-left-width:3px; border-left-style:solid;">
+                        <button type="button" class="close" data-dismiss="alert">
+                            <i class="icon-remove"></i>
+                        </button>
+
+                        Before proceeding to the next question first you need to answer this one.
+                        <br>
+                    </div>
+                    <hr>
+                    <div class="row-fluid wizard-actions">
+                        @*<button class="btn btn-prev" disabled="disabled">
+                            <i class="icon-arrow-left"></i>
+                            Prev
+                        </button>*@
+
+                        <button class="btn btn-inverse no-border btn-next" data-last="Finish ">
+                            Next
+                            <i class="icon-arrow-right icon-on-right"></i>
+                        </button>
+                    </div>
+                </div><!-- /widget-main -->
+            </div><!-- /widget-body -->
+        </div>
+    </div>
+</div>
+<input type="hidden" value="@Model.Id" id="Value_quiz_id"/>
+
+<div class="col-sm-6 col-sm-offset-3 hide">
+    <div class="widget-box">
+        <div class="widget-header header-color-dark">
+            <h5 class="bigger lighter">Results</h5>
+        </div>
+
+        <div class="widget-body">
+            <div class="widget-main">
+                <ul class="list-unstyled spaced2" id="results">
+                    @*<li class="list-group-item"><i class="icon-ok green"></i><i>dsadasd</i><label class="label label-lg arrowed-in-right arrowed pull-right label-success"><strong>&nbsp; &nbsp;10</strong></label></li>*@
+                </ul>
+
+                <hr>
+                <div class="price center" id="points_div">
+                    
+                    <h2><small>points:</small> <i id="points"></i> </h2>
+                </div>
+            </div>
+
+            @*<div>
+                <a href="#" class="btn btn-block btn-inverse">
+                    <i class="icon-shopping-cart bigger-110"></i>
+                    <span>Buy</span>
+                </a>
+            </div>*@
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/Content/assets/js/fuelux/fuelux.wizard.min.js"></script>
+    <script src="~/Content/assets/js/jquery.validate.min.js"></script>
+    <script src="~/Content/assets/js/additional-methods.min.js"></script>
+    <script src="~/Content/assets/js/bootbox.min.js"></script>
+    <script src="~/Content/assets/js/jquery.maskedinput.min.js"></script>
+    <script src="~/Content/assets/js/select2.min.js"></script>
+    <script type="text/javascript">
+        jQuery(function ($) {
+            $('[data-rel=tooltip]').tooltip();
+            $(".select2").css('width', '200px').select2({ allowClear: true })
+                .on('change', function () {
+                    $(this).closest('form').validate().element($(this));
+                });
+
+
+            var $validation = true;
+            $('#fuelux-wizard').ace_wizard().on('change', function (e, info) {
+                console.log("step"+info.step);
+                if (info.step != 1) {
+                    if (!validate_step("step" + info.step)) return false;
+                }
+            }).on('finished', function (e) {
+                if (validate_last_step()) {
+                    Save();
+                    bootbox.dialog({
+                        message: "Thank you! Your information was successfully saved!",
+                        buttons: {
+                            "success": {
+                                "label": "OK",
+                                "className": "btn-sm btn-primary"
+                            }
+                        }
+                    });
+                }
+                
+
+            }).on('stepclick', function (e) {
+                //return false;//prevent clicking on steps
+                });
+
+            validate_step = function (id) {
+                var validation = false;
+                var step = document.getElementById(id);
+                var x = step.querySelector('.Value_box');
+                var question_id = step.childNodes[1].value;
+
+                if (x.tagName == 'DIV') {
+
+                    var ans_id = -1;
+                    var list = x.querySelectorAll("input");
+                    for (var k = 0; k < list.length; k++) {
+                        if (list[k].checked) {
+                            validation = true;
+                            break;
+                        }
+                    }
+                } else if (x.tagName == 'UL') {
+
+                    var checked = x.querySelector(".glyphicon-check");
+                    if (checked != null) {
+                        validation = true;
+                    }
+
+                    //NodeList.prototype.forEach = Array.prototype.forEach
+                    //var children = x.childNodes;
+                    //children.forEach(function (item) {
+                    //    if (item.childNodes[0].classList.contains("glyphicon-check")) {
+                    //        validation = true;
+                    //    }
+
+                    //});
+                } else if (x.tagName == 'INPUT') {
+                    if (x.value != "" && x.value != " ") {
+                        console.log(x.value);
+                        validation = true;
+                    }
+                }
+                if (!validation) {
+                    if (!$("#error").hasClass('show')) {
+                        $("#error").removeClass('hide');
+                        $("#error").addClass("show");
+                    }
+                        
+                } else {
+                    if (!$("#error").hasClass('hide')) {
+                        $("#error").removeClass('show');
+                        $("#error").addClass("hide");
+                    }
+                      
+                }
+                return validation;
+            }
+            validate_last_step = function () {
+                var validation = false;
+                var step = document.getElementById("step_last");
+                var x = step.querySelector('.Value_box');
+                var question_id = step.childNodes[1].value;
+
+                if (x.tagName == 'DIV') {
+
+                    var ans_id = -1;
+                    var list = x.querySelectorAll("input");
+                    for (var k = 0; k < list.length; k++) {
+                        if (list[k].checked) {
+                            validation = true;
+                            break;
+                        }
+                    }
+                } else if (x.tagName == 'UL') {
+
+                    var checked = x.querySelector(".glyphicon-check");
+                    if (checked != null) {
+                        validation = true;
+                    }
+                    //NodeList.prototype.forEach = Array.prototype.forEach
+                    //var children = x.childNodes;
+                    //children.forEach(function (item) {
+                    //    if (item.childNodes[0].classList.contains("glyphicon-check")) {
+                    //        validation = true;
+                    //    }
+
+                    //});
+                } else if (x.tagName == 'INPUT') {
+                    if (x.value != "" && x.value != " ") {
+                        console.log(x.value);
+                        validation = true;
+                    }
+                }
+                if (!validation) {
+                    if (!$("#error").hasClass('show')) {
+                        $("#error").removeClass('hide');
+                        $("#error").addClass("show");
+                    }
+
+                } else {
+                    if (!$("#error").hasClass('hide')) {
+                        $("#error").removeClass('show');
+                        $("#error").addClass("hide");
+                    }
+
+                }
+                return validation;
+            }
+
+            //checkboxes
+            $('.list-group.checked-list-box .list-group-item').each(function () {
+
+                // Settings
+                var $widget = $(this),
+                    $checkbox = $('<input type="checkbox" class="hidden" />'),
+                    color = ($widget.data('color') ? $widget.data('color') : "primary"),
+                    style = ($widget.data('style') == "button" ? "btn-" : "list-group-item-"),
+                    settings = {
+                        on: {
+                            icon: 'glyphicon glyphicon-check'
+                        },
+                        off: {
+                            icon: 'glyphicon glyphicon-unchecked'
+                        }
+                    };
+
+                $widget.css('cursor', 'pointer')
+                $widget.append($checkbox);
+
+                // Event Handlers
+                $widget.on('click', function () {
+                    $checkbox.prop('checked', !$checkbox.is(':checked'));
+                    $checkbox.triggerHandler('change');
+                    updateDisplay();
+                });
+                $checkbox.on('change', function () {
+                    updateDisplay();
+                });
+
+
+                // Actions
+                function updateDisplay() {
+                    var isChecked = $checkbox.is(':checked');
+
+                    // Set the button's state
+                    $widget.data('state', (isChecked) ? "on" : "off");
+
+                    // Set the button's icon
+                    $widget.find('.state-icon')
+                        .removeClass()
+                        .addClass('state-icon ' + settings[$widget.data('state')].icon);
+
+                    // Update the button's color
+                    if (isChecked) {
+                        $widget.addClass(style + color + ' active');
+                    } else {
+                        $widget.removeClass(style + color + ' active');
+                    }
+                }
+
+                // Initialization
+                function init() {
+
+                    if ($widget.data('checked') == true) {
+                        $checkbox.prop('checked', !$checkbox.is(':checked'));
+                    }
+
+                    updateDisplay();
+
+                    // Inject the icon if applicable
+                    if ($widget.find('.state-icon').length == 0) {
+                        $widget.prepend('<span class="state-icon ' + settings[$widget.data('state')].icon + '"></span>');
+                    }
+                }
+
+                init();
+            });
+
+            $('#get-checked-data').on('click', function (event) {
+                event.preventDefault();
+                var checkedItems = {}, counter = 0;
+                $("#check-list-box li.active").each(function (idx, li) {
+                    checkedItems[counter] = $(li).text();
+                    counter++;
+                });
+                console.log(JSON.stringify(checkedItems, null, '\t'));
+            });
+
+        });
+    </script>
+
+    <script type="text/javascript">
+        function Save() {
+            var answers_arr = [];
+            var quiz_id = $("#Value_quiz_id").val();
+
+            var step = document.querySelectorAll(".question_step");
+            
+            for (var i = 0; i < step.length; i++) {
+                var x = step[i].querySelector('.Value_box');
+                var question_id = step[i].childNodes[1].value;
+
+                    if (x.tagName == 'DIV') {
+
+                        var ans_id = -1;
+                        var list = x.querySelectorAll("input");
+                        for (var k = 0; k < list.length; k++) {
+                            if (list[k].checked) {
+                                ans_id = list[k].value;
+                                break;
+                            }
+                        }
+                        var answ = {
+                            Answer: ans_id,
+                            Quiz_Id: quiz_id,
+                            Question_Id: question_id
+                        };
+                        console.log(answ);
+                        answers_arr.push({
+                            Answer: ans_id,
+                            Quiz_Id: quiz_id,
+                            Question_Id: question_id
+                        });
+                    } else if (x.tagName == 'UL') {
+
+                        var children = x.querySelectorAll("li");
+                        for (var k = 0; k < children.length; k++) {
+                            console.log(children[k]);
+                            var child = children[k].querySelector(".glyphicon-check");
+                            if (child != null) {
+                                var ans_id = children[k].querySelector(".Value_option").id;
+                                var answ = {
+                                    Answer: ans_id,
+                                    Quiz_Id: quiz_id,
+                                    Question_Id: question_id
+                                };
+                                console.log(answ);
+                                answers_arr.push({
+                                    Answer: ans_id,
+                                    Quiz_Id: quiz_id,
+                                    Question_Id: question_id
+                                });
+                            }
+                        }
+                    } else if (x.tagName == 'INPUT') {
+                        var answ = {
+                            Answer_text: x.value,
+                            Quiz_Id: quiz_id,
+                            Question_Id: question_id
+                        };
+                        answers_arr.push({
+                            Answer_text: x.value,
+                            Quiz_Id: quiz_id,
+                            Question_Id: question_id
+                        });
+                        console.log(answ);
+                    }
+                
+                
+            }
+            //   answers = JSON.stringify({ 'answers': answers });
+            var answers = {
+                'Stats': answers_arr,
+                'Quiz_Id': parseInt($("#Value_quiz_id").val())
+            };
+            console.log(answers);
+
+            $.ajax({
+                url: '/Quiz/SaveStats',
+                type: 'post',
+                dataType: 'json',
+                data: answers,
+                success: function (response) {
+                    if (response.success) {
+                        window.location.href = response.url;
+                        //$("#points").text(response.points);
+                        //Success("Points: " + response.points);
+                        //question.DisplayResults(response.results);
+                    } else {
+                        Failed();
+                    }
+                    //
+                }
+            });
+        }
+        </script>
+    @*<script>
+        function Display_results(lista) {
+            var box = document.getElementById("results");
+            for (var i = 0; i < lista.length; i++) {
+                var element = document.createElement('li');
+                var ico = document.createElement('i');
+                if (lista[i].Correct) {
+                    ico.classList.add("icon-ok","green");
+                } else {
+                    ico.classList.add("icon-remove", "red");
+                }
+                element.appendChild(ico);
+                var text = document.createElement('i');
+                text.innerHTML = lista[i].Text;
+                element.appendChild(text);
+                var point = document.createElement('strong');
+                point.innerHTML = "&nbsp; &nbsp;" + lista[i].Points;
+                element.appendChild(point);
+                box.appendChild(element);
+            }
+        }
+    </script>*@
+}

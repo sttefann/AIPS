@@ -1,0 +1,275 @@
+﻿@using System.Security.Claims
+@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>QuizMaker</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- basic styles -->
+
+    <link href="~/Content/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/assets/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/Content/assets/css/jquery-ui-1.10.3.full.min.css" />
+
+    <!--[if IE 7]>
+      <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+    <![endif]-->
+    <!-- page specific plugin styles -->
+    <!-- fonts -->
+    <link href="~/Content/assets/css/bootstrap-toggle.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/assets/css/ace-fonts.css" />
+    <link href="~/Content/assets/css/bootstrap-toggle.min.css" rel="stylesheet" />
+    <!-- ace styles -->
+    <!--  <link rel="stylesheet" href="~/Content/assets/css/select2.css" /> -->
+
+    <link rel="stylesheet" href="~/Content/assets/css/ace.min.css" />
+    <link rel="stylesheet" href="~/Content/assets/css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="~/Content/assets/css/ace-skins.min.css" />
+
+    <!--[if lte IE 8]>
+      <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+    <![endif]-->
+    <!-- inline styles related to this page -->
+    <!--
+    <link href="~/Content/header-v5.css" rel=" stylesheet" />
+    -->
+    <!-- <link href="~/Content/assets/css/bootstrap-tagsinput.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/assets/css/bootstrap-multiselect.css" type="text/css" /> -->
+    <!-- ace settings handler -->
+    <link href="~/Content/css/MultiSelectCheckBox.css" rel="stylesheet" />
+
+    <link href="~/Content/css/CreateQuestion.css" rel="stylesheet" />
+    <script src="~/Content/assets/js/ace-extra.min.js"></script>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="assets/js/html5shiv.js"></script>
+    <script src="assets/js/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        .btn-inverse, .btn-inverse:hover, .btn-inverse:active, .btn-inverse:visited {
+            border-radius: 4px !important;
+        }
+        .btn-grey, .btn-grey:hover, .btn-grey:active, .btn-grey:visited {
+            background-color: #303e4c !important;
+            border-color: #303e4c !important;
+        }
+        .grey-2 {
+            background-color: #68768a !important;
+            border-color: #68768a !important;
+        }
+        .button5, .button5:hover, .button5:active, .button5:visited {
+            border-radius: 50%;
+            background-color: whitesmoke !important;
+            border-color: whitesmoke !important;
+            color: black !important;
+        }
+        .quiz-box {
+            background-color: #303e4c !important;
+            border-color: #303e4c !important;
+        }
+    </style>
+
+</head>
+
+<body class="skin-3">
+    <div class="navbar navbar-default" id="navbar">
+
+        <div class="navbar-container container" id="navbar-container">
+            <div class="navbar-header pull-left">
+                <a href="/Home/Index" class="navbar-brand">
+                    <small>
+                        <i class="icon-cogs"></i>
+                        QuizMaker
+                    </small>
+                </a><!-- /.brand -->
+            </div><!-- /.navbar-header -->
+
+            <div class="navbar-header pull-right" role="navigation">
+                <ul class="nav ace-nav">
+
+                    @Html.Partial("_LoginPartial")
+
+                </ul><!-- /.ace-nav -->
+            </div><!-- /.navbar-header -->
+        </div><!-- /.container -->
+    </div>
+    <div class="">
+
+
+        <div class="main-container container" id="main-container">
+
+            <div class="main-container-inner">
+                <a class="menu-toggler" id="menu-toggler" href="#">
+                    <span class="menu-text"></span>
+                </a>
+
+                <div class="sidebar" id="sidebar">
+
+                    <ul class="nav nav-list">
+
+
+                        <li id="index">
+                            <a href="/Home/Dashboard">
+                                <i class="icon-dashboard"></i>
+                                <span class="menu-text"> Dashboard </span>
+                            </a>
+                        </li>
+                        <li id="category">
+                            <a href="/Home/Category" class="dropdown-toggle">
+                                <i class="icon-list"></i>
+                                <span class="menu-text"> Categories </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Index", "Group")">
+                                <i class="icon-group"></i>
+                                <span class="menu-text"> TeamProjects </span>
+                            </a>
+                        </li>
+                        <!---
+                            <ul class="submenu" style="display: block">
+                                    <li id="company">
+                                        <a asp-area="" asp-controller="Company" asp-action="Index">
+                                            <i class="icon-double-angle-right"></i>
+                                            Company
+                                        </a>
+                                    </li>
+
+                                <li id="employee">
+                                    <a href="/Employee/Index">
+                                        <i class="icon-double-angle-right"></i>
+                                        Employee
+                                    </a>
+                                </li>
+                            </ul>
+                            -->
+
+
+
+                    </ul><!-- /.nav-list -->
+
+                    <div class="sidebar-collapse" id="sidebar-collapse">
+                        <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+                    </div>
+
+                </div>
+                <div class="main-content " style="background-color:white !important; height:100%;">
+                    <div class="breadcrumbs" id="breadcrumbs" style="background-color:white;">
+                        @*<ul class="breadcrumb">
+                            <li>
+                                <i class="icon-home home-icon"></i>
+                                <a href="#">Home</a>
+                            </li>
+
+                            <li>
+                                <a href="#">UI Elements</a>
+                            </li>
+                            <li class="active">Buttons &amp; Icons</li>
+                        </ul>*@<!-- .breadcrumb -->
+                    </div>
+                    <div class="page-content">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div>
+                                   
+                                        <div class="alert alert-block alert-success hide" id="msg-success">
+                                            <button type="button" class="close" data-dismiss="alert">
+                                                <i class="icon-remove"></i>
+                                            </button>
+                                            <p id="s">
+                                                <strong>
+                                                    <i class="icon-ok"></i>
+                                                    Success!
+                                                </strong>
+                                                <span id="success-span">
+
+                                                </span>
+                                            </p>
+                                        </div>
+                                     
+                                        <div class="alert alert-danger hide" id="msg-failed">
+                                            <button type="button" class="close" data-dismiss="alert">
+                                                <i class="icon-remove"></i>
+                                            </button>
+
+                                            <strong>
+                                                <i class="icon-remove"></i>
+                                                Failed!
+                                            </strong>
+                                            <span id="failed-span"> </span>
+                                            <br />
+                                        </div>
+                                     
+                                </div>
+                                @RenderBody()
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.main-container-inner -->
+
+            <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+                <i class="icon-double-angle-up icon-only bigger-110"></i>
+            </a>
+        </div><!-- /.main-container -->
+    </div>
+    <!-- basic scripts -->
+    <!--[if !IE]> -->
+
+    <script src='~/Content/assets/js/jquery-2.0.3.min.js'></script>
+
+    <!-- <![endif]-->
+    <!--[if IE]>
+    <script type="text/javascript">
+     window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+    </script>
+    <![endif]-->
+
+    <script src='~/Content/assets/js/jquery.mobile.custom.min.js'></script>
+    <script src="~/Scripts/jquery.signalR-2.0.1.js"></script>
+    <script src="~/Content/assets/js/bootstrap.min.js"></script>
+    <script src="~/Content/assets/js/typeahead-bs2.min.js"></script>
+    <script src="~/Content/assets/js/bootstrap-toggle.min.js"></script>
+    <!-- page specific plugin scripts -->
+    <!-- ace scripts -->
+    <script src="~/Content/assets/js/bootstrap-toggle.js"></script>
+    <script src="~/Content/assets/js/ace-elements.min.js"></script>
+    <script src="~/Content/assets/js/ace.min.js"></script>
+    <script type="text/javascript" src="~/Content/assets/js/bootstrap-multiselect.js"></script>
+    <!-- inline scripts related to this page -->
+    <script type="text/javascript" src="~/Scripts/MyScripts/alert-notification.js"></script>
+
+    <script src="~/signalr/hubs"></script>
+    <script type="text/javascript" src="~/Scripts/MyScripts/signalr.hub.js"></script>
+    <script src="~/Scripts/MyScripts/CreateQuestion/team-project.functions.js"></script>
+    @if (Request.IsAuthenticated)
+    {
+    <script type="text/javascript">
+            window.startHub();
+            hub.client.user = function (user, quiz_name, quiz_id) {
+                if (user === "@User.Identity.GetUserName()") {
+                    hub.server.addToGroup(quiz_id, user);
+                    UserContainer.addNotification(quiz_id, quiz_name);
+                }
+        }
+        hub.client.refresh = function (username) {
+            if (username === "@User.Identity.GetUserName()") {
+                window.location.reload(true);
+            }
+        }
+    </script>
+    }
+    @RenderSection("scripts", required: false)
+
+
+</body>
+</html>
+
+
+<!--
+
+-->

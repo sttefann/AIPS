@@ -15,10 +15,11 @@ namespace QuizMaker.DAL.DB
     public partial class TeamMember
     {
         public long Id { get; set; }
-        public long Team_Id { get; set; }
         public long User_Id { get; set; }
+        public long Quiz_Id { get; set; }
+        public string Username { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
-        public virtual Team Team { get; set; }
+        public virtual Quiz Quizze { get; set; }
     }
 }

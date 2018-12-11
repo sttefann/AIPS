@@ -10,12 +10,11 @@ namespace QuizMaker.Interfaces.Repository
     {
         ICategoryRepository Categories { get; set; }
         IPossibleAnswerRepository PossibleAnswers { get; set; }
+        ICorrectAnswerRepository CorrectAnswers { get; set; }
         IQuestionRepository Questions { get; set; }
         IQuizRepository Quizzes { get; set; }
-        IStatisticalListRepository StatisticalLists { get; set; }
-        ISurveyStatisticRepository SurveyStatistics { get; set; }
+        IStatisticsRepository Statistics { get; set; }
         ITeamMemberRepository TeamMembers { get; set; }
-        ITeamRepository Teams { get; set; }
         int Complete();
     }
 }

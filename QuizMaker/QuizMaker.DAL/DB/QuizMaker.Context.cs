@@ -25,20 +25,17 @@ namespace QuizMaker.DAL.DB
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<AspNetRoleClaim> AspNetRoleClaims { get; set; }
+        public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
-        public virtual DbSet<AspNetUserRole> AspNetUserRoles { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
-        public virtual DbSet<AspNetUserToken> AspNetUserTokens { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<PossibleAnswer> PossibleAnswers { get; set; }
         public virtual DbSet<Question> Questions { get; set; }
         public virtual DbSet<Quiz> Quizs { get; set; }
-        public virtual DbSet<StatisticalList> StatisticalLists { get; set; }
-        public virtual DbSet<SurveyStatistic> SurveyStatistics { get; set; }
         public virtual DbSet<TeamMember> TeamMembers { get; set; }
-        public virtual DbSet<Team> Teams { get; set; }
+        public virtual DbSet<CorrectAnswer> CorrectAnswers { get; set; }
+        public virtual DbSet<Statistic> Statistics { get; set; }
     }
 }

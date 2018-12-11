@@ -4,20 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using QuizMaker.DAL.DB;
-using QuizMaker.Models.TeamModel;
+
 
 namespace QuizMaker.Interfaces.BL
 {
     public interface ITeamManager
     {
-        TeamModel GetTeam(long id);
-        bool Add(TeamModel team);
-        bool Update(TeamModel team);
-        bool Delete(long id);
-        bool AddTeamMember(TeamMember member, long teamId);
-        bool DeleteTeamMember(long teamid, long memberId);
-        bool AddQuiz(Quiz quiz,long teamId);
-        List<Quiz> GetQuizzes(long teamId);
-
+        bool AddTeamMember(long quizId, long userId, string username);
+        bool DeleteTeamMember(long quizId, long userId);
+        List<long> GetAll(long quizId);
+        List<string> GetAllMembers(long quizId);
     }
 }

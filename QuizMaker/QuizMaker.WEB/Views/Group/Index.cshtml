@@ -1,0 +1,44 @@
+﻿@model List<QuizMaker.Models.QuizModels.QuizzCategoryModel>
+
+<h3 class="header smaller">Your Quizzes</h3>
+<div class="row">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-10 col-xs-12" id="quiz_box">
+
+        @foreach (var Element in Model)
+        {
+            <div class="col-sm-2 center">
+                <a class="btn btn-app btn-light btn-xs radius-4" href="/Group/TeamProject/@Element.Id">
+                    @if (Element.Type == "test")
+                    {
+                        <i class="icon-cog bigger-160"></i>
+                        <i>Test</i>
+                    }
+                    else if (Element.Type == "survey")
+                    {
+                        <i class="icon-edit bigger-160"></i>
+                        <i> Survey</i>
+                    }
+                    else if (Element.Type == "poll")
+                    {
+                        <i class="glyphicon glyphicon-stats bigger-160"></i>
+                        <i>Poll</i>
+                    }
+
+
+
+                    <span class="badge badge-transparent">
+
+                    </span>
+                </a>
+                    <label class="center">
+                        @Html.DisplayFor(element => Element.Name)
+                    </label>
+                <hr />
+            </div>
+        }
+
+
+
+    </div>
+</div>

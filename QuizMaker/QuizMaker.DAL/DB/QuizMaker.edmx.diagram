@@ -4,37 +4,34 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="c1e9540d5fd848749dfd25fcbde7e61d" Name="Diagram1" ZoomLevel="86">
-        <EntityTypeShape EntityType="QuizMakerModel.AspNetRoleClaim" Width="1.75" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuizMakerModel.AspNetRole" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuizMakerModel.AspNetUserClaim" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuizMakerModel.AspNetUserLogin" Width="1.5" PointX="3" PointY="8.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuizMakerModel.AspNetUserRole" Width="1.5" PointX="3" PointY="11.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuizMakerModel.AspNetUser" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuizMakerModel.AspNetUserToken" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuizMakerModel.Category" Width="1.5" PointX="3" PointY="14.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuizMakerModel.PossibleAnswer" Width="1.5" PointX="9.75" PointY="13.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuizMakerModel.Question" Width="1.5" PointX="7.5" PointY="13.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuizMakerModel.Quiz" Width="1.5" PointX="5.25" PointY="12.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuizMakerModel.StatisticalList" Width="1.5" PointX="3" PointY="18" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuizMakerModel.SurveyStatistic" Width="1.5" PointX="9.75" PointY="10.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuizMakerModel.TeamMember" Width="1.5" PointX="6" PointY="9.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuizMakerModel.Team" Width="1.5" PointX="3.75" PointY="3.375" IsExpanded="true" />
-        <AssociationConnector Association="QuizMakerModel.FK_AspNetUserClaims_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="QuizMakerModel.FK_AspNetUserLogins_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="QuizMakerModel.FK_AspNetUserRoles_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="QuizMakerModel.FK_Quiz_Owner" ManuallyRouted="false" />
-        <AssociationConnector Association="QuizMakerModel.FK_StatisticalLists_AspNetUsers" ManuallyRouted="false" />
-        <AssociationConnector Association="QuizMakerModel.FK_SurveyStatistics_AspNetUsers" ManuallyRouted="false" />
-        <AssociationConnector Association="QuizMakerModel.FK_TeamMembers_Users" ManuallyRouted="false" />
-        <AssociationConnector Association="QuizMakerModel.FK_Quizzes_Categories" ManuallyRouted="false" />
-        <AssociationConnector Association="QuizMakerModel.FK_PossibleAnswers_Question" ManuallyRouted="false" />
-        <AssociationConnector Association="QuizMakerModel.FK_AllAnswers_Questions" ManuallyRouted="false" />
-        <AssociationConnector Association="QuizMakerModel.FK_Quiz_Questions" ManuallyRouted="false" />
-        <AssociationConnector Association="QuizMakerModel.FK_Quizzes_Teams" ManuallyRouted="false" />
-        <AssociationConnector Association="QuizMakerModel.FK_SurveyStatistics_Quizzes" ManuallyRouted="false" />
-        <AssociationConnector Association="QuizMakerModel.FK_TeamMembers_Team" ManuallyRouted="false" />
-        <AssociationConnector Association="QuizMakerModel.FK_StatisticalLists_Quizzes" />
+      <Diagram DiagramId="1cf4a2a456b94f5c9548bd37eeae1ee7" Name="Diagram1" ZoomLevel="72">
+        <EntityTypeShape EntityType="QuizMakerModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="QuizMakerModel.AspNetRole" Width="1.5" PointX="0.5" PointY="5.5" />
+        <EntityTypeShape EntityType="QuizMakerModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="16.75" />
+        <EntityTypeShape EntityType="QuizMakerModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="14.25" />
+        <EntityTypeShape EntityType="QuizMakerModel.AspNetUser" Width="2.25" PointX="2.25" PointY="7.5" />
+        <EntityTypeShape EntityType="QuizMakerModel.Category" Width="1.5" PointX="3" PointY="4.625" />
+        <EntityTypeShape EntityType="QuizMakerModel.PossibleAnswer" Width="1.5" PointX="9.75" PointY="15.25" />
+        <EntityTypeShape EntityType="QuizMakerModel.Question" Width="1.5" PointX="7.5" PointY="11.625" />
+        <EntityTypeShape EntityType="QuizMakerModel.Quiz" Width="1.5" PointX="5.25" PointY="8.25" />
+        <EntityTypeShape EntityType="QuizMakerModel.TeamMember" Width="1.5" PointX="8.25" PointY="8.875" />
+        <AssociationConnector Association="QuizMakerModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="QuizMakerModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="QuizMakerModel.FK_Quiz_Owner" />
+        <AssociationConnector Association="QuizMakerModel.FK_TeamMembers_Users" />
+        <AssociationConnector Association="QuizMakerModel.FK_Quizzes_Categories" />
+        <AssociationConnector Association="QuizMakerModel.FK_PossibleAnswers_Question" />
+        <AssociationConnector Association="QuizMakerModel.FK_Quiz_Questions" />
+        <AssociationConnector Association="QuizMakerModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="QuizMakerModel.CorrectAnswer" Width="1.5" PointX="12" PointY="13.5" />
+        <AssociationConnector Association="QuizMakerModel.FK_CorrectAnswer_PossibleAnswer" />
+        <AssociationConnector Association="QuizMakerModel.FK_CorrectAnswer_Questions" />
+        <EntityTypeShape EntityType="QuizMakerModel.Statistic" Width="1.5" PointX="13" PointY="9.125" />
+        <AssociationConnector Association="QuizMakerModel.FK_SurveyStatistics_AspNetUsers1" />
+        <AssociationConnector Association="QuizMakerModel.FK_SurveyStatistics_Answer1" />
+        <AssociationConnector Association="QuizMakerModel.FK_AllAnswers_Questions1" />
+        <AssociationConnector Association="QuizMakerModel.FK_SurveyStatistics_Quizzes1" />
+        <AssociationConnector Association="QuizMakerModel.FK_TeamMembers_Quiz" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

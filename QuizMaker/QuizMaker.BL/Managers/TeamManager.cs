@@ -6,105 +6,101 @@ using System.Threading.Tasks;
 using QuizMaker.DAL.DB;
 using QuizMaker.Interfaces.BL;
 using QuizMaker.Interfaces.Repository;
-using QuizMaker.Models.TeamModel;
+
+using System.Diagnostics;
+using QuizMaker.Models.Item;
 
 namespace QuizMaker.BL.Managers
 {
     public class TeamManager : ITeamManager
     {
         private readonly IUow _uow;
-
         public TeamManager(IUow uow)
         {
             _uow = uow;
         }
-        public bool Add(TeamModel model)
+
+        public bool AddTeamMember(long quizId, long userId, string username)
         {
             try
             {
-
-                Team team = new Team();
-                team.Name = model.Name;
-                team.TeamMembers = model.TeamMeambers;
-                team.Quizzes = model.Quizzes;
-                _uow.Teams.Add(team);
-                _uow.Complete();
-                return true;
-
-            }catch(Exception e)
-            {
-                return false;
-            }
-        }
-
-        public bool AddQuiz(Quiz quiz,long teamId)
-        {
-            try
-            {
-                Team team = _uow.Teams.Get(teamId);
-                team.Quizzes.Add(quiz);
+                TeamMember member = new TeamMember
+                {
+                    Quiz_Id = quizId,
+                    User_Id = userId,
+                    Username = username
+                };
+                TeamMember result = _uow.TeamMembers.Add(member);
                 _uow.Complete();
                 return true;
             }
             catch (Exception e)
             {
+                //Log exception
+                var exception = e.InnerException;
+                Debug.Write(exception.Message);
                 return false;
             }
         }
-
-        public bool AddTeamMember(TeamMember member, long teamId)
+        public bool DeleteTeamMember(long quizId, long userId)
         {
             try
             {
-                Team team = _uow.Teams.Get(teamId);
-                team.TeamMembers.Add(member);
-                _uow.Complete();
-                return true;
+                List<TeamMember> members = _uow.TeamMembers.GetAll().Where(x => x.Quiz_Id == quizId).ToList();
+                TeamMember result = new TeamMember();
+                bool check = false;
+                foreach (var member in members)
+                {
+                    if(member.User_Id == userId)
+                    {
+                        result = member;
+                        check = true;
+                    }
+                }
+                if (check)
+                {
+                    _uow.TeamMembers.Remove(result);
+                    _uow.Complete();
+                    return true;
+                }
+                return false;
             }
             catch (Exception e)
             {
-                return false; 
-            }
-        }
-
-        public bool Delete(long id)
-        {
-            try
-            {
-                Team team = _uow.Teams.Get(id);
-                _uow.Teams.Remove(team);
-                _uow.Complete();
-                return true;
-            }
-            catch (Exception e)
-            {
+                //Log exception
+                var exception = e.InnerException;
+                Debug.Write(exception.Message);
                 return false;
             }
         }
-
-        public bool DeleteTeamMember(long teamId, long memberId)
+        public List<long> GetAll(long quizId)
         {
             try
             {
-                Team team = _uow.Teams.Get(teamId);
-                TeamMember member = _uow.TeamMembers.Get(memberId);
-
-                team.TeamMembers.Remove(member);
-                _uow.Complete();
-                return true;
+                List<TeamMember> members = _uow.TeamMembers.GetAll().Where(x => x.Quiz_Id == quizId).ToList();
+                List<long> users = new List<long>();
+                foreach (var mem in members)
+                {
+                    users.Add(mem.User_Id);
+                }
+                return users;
             }
-            catch (Exception e)
+            catch(Exception e)
             {
-                return false;
+                return null;
             }
         }
-
-        public List<Quiz> GetQuizzes(long teamId)
+        public List<string> GetAllMembers(long quizId)
         {
             try
             {
-                List<Quiz> quizzes = _uow.Teams.Get(teamId).Quizzes.ToList();
-                return quizzes;
+                List<TeamMember> members = _uow.TeamMembers.GetAll().Where(x => x.Quiz_Id == quizId).ToList();
+                List<string> users = new List<string>();
+                foreach (var mem in members)
+                {
+                    users.Add(mem.Username);
+                }
+                return users;
             }
             catch (Exception e)
             {
@@ -112,42 +108,5 @@ namespace QuizMaker.BL.Managers
             }
         }
 
-        public TeamModel GetTeam(long id)
-        {
-            try
-            {
-                TeamModel model = new TeamModel();
-                Team team = _uow.Teams.Get(id);
-                model.id = team.id;
-                model.Name = team.Name;
-                model.Quizzes = team.Quizzes.ToList();
-                model.TeamMeambers = team.TeamMembers.ToList();
-                return model;
-            }
-            catch (Exception e)
-            {
-                return null;
-            }
-        }
-
-        public bool Update(TeamModel team)
-        {
-            try
-            {
-                Team model = _uow.Teams.Get(team.id);
-
-                model.id = team.id;
-                model.Name = team.Name;
-                model.Quizzes = team.Quizzes.ToList();
-                model.TeamMembers = team.TeamMeambers;
-
-                _uow.Complete();
-                return true;
-            }
-            catch (Exception e)
-            {
-                return false;
-            }
-        }
     }
 }
