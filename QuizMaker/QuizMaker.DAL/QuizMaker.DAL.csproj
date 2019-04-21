@@ -132,6 +132,7 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>QuizMaker.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="DBBackup\QuizMaker.bak" />
     <None Include="DB\QuizMaker.edmx.diagram">
       <DependentUpon>QuizMaker.edmx</DependentUpon>
     </None>
@@ -152,5 +153,6 @@
       <LastGenOutput>QuizMaker.cs</LastGenOutput>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
